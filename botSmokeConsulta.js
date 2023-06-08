@@ -1,9 +1,9 @@
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const { formatToNumber } = require("./src/scripts/formatObjects");
+const { getResponse } = require("./src/scripts/getResponse");
 
 // PORTA ONDE O SERVIÇO SERÁ INICIADO
-const port = 8001;
 const idClient = "bot-Barber";
 
 const client = new Client({
@@ -39,13 +39,19 @@ client.on("ready", () => {
 client.initialize();
 
 // Escuta mensagens recebidas
-client.on("message", (message) => {
+client.on("message", async (msg) => {
   // Transforma número em ID cadastrado no BD
-  const chatId = msg.from;
-  const name = msg._data.notifyName;
-  const phoneNumber = formatToNumber(chatId);
+  const message = {
+    keyword: msg.body.toLocaleLowerCase(),
+    chatId: msg.from,
+    name: msg._data.notifyName,
+    phoneNumber: formatToNumber(msg.from),
+  };
 
   console.log(message);
+  const messageReply = await getResponse(message);
 
-  client.sendMessage(message.from, "TA FUNCIONANDO CARALHO");
+  if (messageReply) {
+    client.sendMessage(msg.from, messageReply);
+  }
 });

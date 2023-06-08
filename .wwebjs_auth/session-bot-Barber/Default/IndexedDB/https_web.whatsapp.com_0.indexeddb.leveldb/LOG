@@ -1,23 +1,14 @@
-2023/06/08-15:04:41.193 3eb0 Reusing MANIFEST D:\Repositorio Local\CHATBOT--CORACINI\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/06/08-15:04:41.193 3eb0 Recovering log #52
-2023/06/08-15:04:41.214 3eb0 Reusing old log D:\Repositorio Local\CHATBOT--CORACINI\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000052.log 
-2023/06/08-15:05:03.100 10b0 Compacting 1@1 + 1@2 files
-2023/06/08-15:05:03.483 10b0 Generated table #57@1: 28879 keys, 1491420 bytes
-2023/06/08-15:05:03.483 10b0 Compacted 1@1 + 1@2 files => 1491420 bytes
-2023/06/08-15:05:03.508 10b0 compacted to: files[ 0 1 1 0 0 0 0 ]
-2023/06/08-15:05:03.509 10b0 Delete type=2 #18
-2023/06/08-15:05:03.509 10b0 Delete type=2 #54
-2023/06/08-15:05:13.617 37a8 Level-0 table #59: started
-2023/06/08-15:05:13.751 37a8 Level-0 table #59: 1033745 bytes OK
-2023/06/08-15:05:13.773 37a8 Delete type=0 #52
-2023/06/08-15:05:55.916 3f08 Compacting 1@0 + 1@1 files
-2023/06/08-15:05:56.148 3f08 Generated table #60@0: 32339 keys, 1512663 bytes
-2023/06/08-15:05:56.148 3f08 Compacted 1@0 + 1@1 files => 1512663 bytes
-2023/06/08-15:05:56.182 3f08 compacted to: files[ 0 1 1 0 0 0 0 ]
-2023/06/08-15:05:56.182 3f08 Delete type=2 #55
-2023/06/08-15:05:56.182 3f08 Delete type=2 #59
-2023/06/08-15:05:56.818 5134 Compacting 1@1 + 1@2 files
-2023/06/08-15:05:57.121 5134 Generated table #61@1: 36327 keys, 2211050 bytes
-2023/06/08-15:05:57.204 5134 Generated table #62@1: 11558 keys, 362333 bytes
-2023/06/08-15:05:57.204 5134 Compacted 1@1 + 1@2 files => 2573383 bytes
-2023/06/08-15:05:57.226 5134 compacted to: files[ 0 0 2 0 0 0 0 ]
+2023/06/08-16:31:55.635 51a0 Reusing MANIFEST D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/08-16:31:55.636 51a0 Recovering log #69
+2023/06/08-16:31:55.748 51a0 Reusing old log D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000069.log 
+2023/06/08-16:32:14.829 42d0 Level-0 table #75: started
+2023/06/08-16:32:14.974 42d0 Level-0 table #75: 1003327 bytes OK
+2023/06/08-16:32:15.119 42d0 Delete type=0 #69
+2023/06/08-16:32:15.191 42d0 Compacting 1@1 + 2@2 files
+2023/06/08-16:32:15.675 42d0 Generated table #76@1: 40977 keys, 2209338 bytes
+2023/06/08-16:32:15.811 42d0 Generated table #77@1: 17190 keys, 895317 bytes
+2023/06/08-16:32:15.812 42d0 Compacted 1@1 + 2@2 files => 3104655 bytes
+2023/06/08-16:32:15.845 42d0 compacted to: files[ 0 0 2 0 0 0 0 ]
+2023/06/08-16:32:15.846 42d0 Delete type=2 #71
+2023/06/08-16:32:15.846 42d0 Delete type=2 #72
+2023/06/08-16:32:15.846 42d0 Delete type=2 #75
