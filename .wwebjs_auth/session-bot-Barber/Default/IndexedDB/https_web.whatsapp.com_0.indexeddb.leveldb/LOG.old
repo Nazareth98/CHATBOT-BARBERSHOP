@@ -1,0 +1,17 @@
+2023/06/08-15:03:40.086 48cc Reusing MANIFEST D:\Repositorio Local\CHATBOT--CORACINI\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/08-15:03:40.087 48cc Recovering log #47
+2023/06/08-15:03:40.123 48cc Reusing old log D:\Repositorio Local\CHATBOT--CORACINI\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000047.log 
+2023/06/08-15:03:40.124 48cc Delete type=2 #45
+2023/06/08-15:03:40.124 48cc Delete type=2 #46
+2023/06/08-15:03:40.124 48cc Delete type=2 #48
+2023/06/08-15:04:02.859 4a30 Level-0 table #53: started
+2023/06/08-15:04:02.996 4a30 Level-0 table #53: 1034935 bytes OK
+2023/06/08-15:04:03.024 4a30 Delete type=0 #47
+2023/06/08-15:04:07.093 2014 Compacting 1@0 + 2@1 files
+2023/06/08-15:04:07.611 2014 Generated table #54@0: 129111 keys, 2310391 bytes
+2023/06/08-15:04:07.753 2014 Generated table #55@0: 16870 keys, 1005834 bytes
+2023/06/08-15:04:07.753 2014 Compacted 1@0 + 2@1 files => 3316225 bytes
+2023/06/08-15:04:07.785 2014 compacted to: files[ 0 2 1 0 0 0 0 ]
+2023/06/08-15:04:07.785 2014 Delete type=2 #49
+2023/06/08-15:04:07.785 2014 Delete type=2 #50
+2023/06/08-15:04:07.785 2014 Delete type=2 #53
