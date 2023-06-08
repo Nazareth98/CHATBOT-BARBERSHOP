@@ -1,5 +1,6 @@
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
+const { formatToNumber } = require("./src/scripts/formatObjects");
 
 // PORTA ONDE O SERVIÇO SERÁ INICIADO
 const port = 8001;
@@ -39,7 +40,12 @@ client.initialize();
 
 // Escuta mensagens recebidas
 client.on("message", (message) => {
-  console.log(message.body);
+  // Transforma número em ID cadastrado no BD
+  const chatId = msg.from;
+  const name = msg._data.notifyName;
+  const phoneNumber = formatToNumber(chatId);
+
+  console.log(message);
 
   client.sendMessage(message.from, "TA FUNCIONANDO CARALHO");
 });
