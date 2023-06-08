@@ -48,7 +48,6 @@ client.on("message", async (msg) => {
     phoneNumber: formatToNumber(msg.from),
   };
 
-  console.log(message);
   const messageReply = await getResponse(message);
 
   if (messageReply) {

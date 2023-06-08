@@ -1,14 +1,11 @@
-2023/06/08-16:31:55.635 51a0 Reusing MANIFEST D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/06/08-16:31:55.636 51a0 Recovering log #69
-2023/06/08-16:31:55.748 51a0 Reusing old log D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000069.log 
-2023/06/08-16:32:14.829 42d0 Level-0 table #75: started
-2023/06/08-16:32:14.974 42d0 Level-0 table #75: 1003327 bytes OK
-2023/06/08-16:32:15.119 42d0 Delete type=0 #69
-2023/06/08-16:32:15.191 42d0 Compacting 1@1 + 2@2 files
-2023/06/08-16:32:15.675 42d0 Generated table #76@1: 40977 keys, 2209338 bytes
-2023/06/08-16:32:15.811 42d0 Generated table #77@1: 17190 keys, 895317 bytes
-2023/06/08-16:32:15.812 42d0 Compacted 1@1 + 2@2 files => 3104655 bytes
-2023/06/08-16:32:15.845 42d0 compacted to: files[ 0 0 2 0 0 0 0 ]
-2023/06/08-16:32:15.846 42d0 Delete type=2 #71
-2023/06/08-16:32:15.846 42d0 Delete type=2 #72
-2023/06/08-16:32:15.846 42d0 Delete type=2 #75
+2023/06/08-17:34:49.096 3634 Reusing MANIFEST D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/08-17:34:49.103 3634 Recovering log #134
+2023/06/08-17:34:49.279 3634 Reusing old log D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000134.log 
+2023/06/08-17:35:04.194 3d4c Level-0 table #140: started
+2023/06/08-17:35:04.378 3d4c Level-0 table #140: 1046367 bytes OK
+2023/06/08-17:35:04.411 3d4c Delete type=0 #134
+2023/06/08-17:35:07.134 2260 Compacting 1@1 + 2@2 files
+2023/06/08-17:35:07.646 2260 Generated table #141@1: 48739 keys, 2218413 bytes
+2023/06/08-17:35:07.814 2260 Generated table #142@1: 18175 keys, 979798 bytes
+2023/06/08-17:35:07.815 2260 Compacted 1@1 + 2@2 files => 3198211 bytes
+2023/06/08-17:35:07.859 2260 compacted to: files[ 0 0 2 0 0 0 0 ]
