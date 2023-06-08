@@ -1,5 +1,6 @@
-const { getDocs } = require("firebase/firestore");
+const { doc, setDoc, getDocs } = require("firebase/firestore");
 const { db, collection } = require("../firebase/index");
+const { v4: uuidv4 } = require("uuid");
 
 const getData = async (folder) => {
   let dataArr = [];
@@ -22,21 +23,11 @@ const isRegistered = async (phoneNumber) => {
 };
 
 const createClient = async (name, phoneNumber) => {
-  let newClient = {
+  await setDoc(doc(db, "clientes", uuidv4()), {
     name: name,
     phoneNumber: phoneNumber,
     lastService: null,
-  };
-  console.log("DADOS DO NOVO CLIENTE:", newClient);
-
-  collection(db, "clientes")
-    .add(newClient)
-    .then((docRef) => {
-      console.log("Item inserido com sucesso! Documento ID:", docRef.id);
-    })
-    .catch((error) => {
-      console.error("Erro ao inserir item:", error);
-    });
+  });
 };
 
 const getResponse = async ({ keyword, chatId, name, phoneNumber }) => {
@@ -52,7 +43,7 @@ const getResponse = async ({ keyword, chatId, name, phoneNumber }) => {
   if (isRegistered(phoneNumber) === true) {
     return `Olá ${name}! Tudo certo?\nPara agendar atendimento com Felipe selecione umas das seguintes opções:\n\nhjasdajs`;
   } else {
-    await createClient(name, phoneNumber);
+    createClient(name, phoneNumber);
     console.log("nao tem cadastro");
     return `Olá ${name}! Tudo certo?\nPara agendar atendimento com Felipe selecione umas das seguintes opções:\n\nhjasdajs`;
   }

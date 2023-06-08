@@ -1,11 +1,11 @@
-2023/06/08-17:34:49.096 3634 Reusing MANIFEST D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/06/08-17:34:49.103 3634 Recovering log #134
-2023/06/08-17:34:49.279 3634 Reusing old log D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000134.log 
-2023/06/08-17:35:04.194 3d4c Level-0 table #140: started
-2023/06/08-17:35:04.378 3d4c Level-0 table #140: 1046367 bytes OK
-2023/06/08-17:35:04.411 3d4c Delete type=0 #134
-2023/06/08-17:35:07.134 2260 Compacting 1@1 + 2@2 files
-2023/06/08-17:35:07.646 2260 Generated table #141@1: 48739 keys, 2218413 bytes
-2023/06/08-17:35:07.814 2260 Generated table #142@1: 18175 keys, 979798 bytes
-2023/06/08-17:35:07.815 2260 Compacted 1@1 + 2@2 files => 3198211 bytes
-2023/06/08-17:35:07.859 2260 compacted to: files[ 0 0 2 0 0 0 0 ]
+2023/06/08-17:46:19.591 37d8 Reusing MANIFEST D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/08-17:46:19.592 37d8 Recovering log #159
+2023/06/08-17:46:19.685 37d8 Reusing old log D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000159.log 
+2023/06/08-17:46:38.328 234c Level-0 table #165: started
+2023/06/08-17:46:38.719 234c Level-0 table #165: 1012447 bytes OK
+2023/06/08-17:46:38.738 234c Delete type=0 #159
+2023/06/08-17:46:38.774 234c Compacting 1@1 + 2@2 files
+2023/06/08-17:46:39.022 234c Generated table #166@1: 50627 keys, 2218795 bytes
+2023/06/08-17:46:39.225 234c Generated table #167@1: 20996 keys, 1216301 bytes
+2023/06/08-17:46:39.226 234c Compacted 1@1 + 2@2 files => 3435096 bytes
+2023/06/08-17:46:39.258 234c compacted to: files[ 0 0 2 0 0 0 0 ]
