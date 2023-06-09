@@ -49,7 +49,7 @@ client.on("message", async (msg) => {
   };
 
   const messageReply = await getResponse(message);
-
+  console.log(messageReply);
   if (messageReply) {
     client.sendMessage(msg.from, messageReply);
   }

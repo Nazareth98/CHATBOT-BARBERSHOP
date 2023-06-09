@@ -24,4 +24,5 @@ const db = getFirestore(firebaseApp);
 module.exports = {
   db,
   collection,
+  firebaseConfig,
 };
