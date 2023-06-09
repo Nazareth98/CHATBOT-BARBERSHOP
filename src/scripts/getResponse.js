@@ -53,7 +53,7 @@ const getWorkingDays = async () => {
 
     // Loop para verificar os próximos dias úteis
     let currentDate = new Date();
-    while (workingDays.length < 7) {
+    while (workingDays.length < 4) {
       // Verifica se a data não é final de semana e não é feriado
       if (
         currentDate.getDay() !== 0 &&
