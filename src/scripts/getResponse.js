@@ -85,7 +85,7 @@ const isHoliday = (date, holidays) => {
 const getResponse = async ({ keyword, chatId, name, phoneNumber }) => {
   const servicos = await getData("servicos");
   const clientes = await getData("clientes");
-  const agendamentos = await getData("agendamentos");
+  const agenda = await getData("agenda");
   const registered = await isRegistered(name, phoneNumber);
   let nextDays = [];
 
@@ -102,32 +102,30 @@ const getResponse = async ({ keyword, chatId, name, phoneNumber }) => {
   //console.log(servicos);
   //console.log(clientes);
   //console.log(agendamentos);
-
+  g;
   // se esse cliente ja esta cadastrado
 
   console.log("mensagem recebida:", keyword);
 
   switch (keyword) {
     case "1":
+      createService();
       reply = `Para agendar o seu *Corte de Cabelo*, selecione um dos próximos dias disponíveis!\n\n`;
       for (let i = 0; i < nextDays.length; i++) {
         reply = `${reply}${nextDays[i]}\n`;
       }
-      console.log(reply);
       return reply;
     case "2":
       reply = `Para agendar o seu *Corte da sua Barba*, selecione um dos próximos dias disponíveis!\n\n`;
       for (let i = 0; i < nextDays.length; i++) {
         reply = `${reply}${nextDays[i]}\n`;
       }
-      console.log(reply);
       return reply;
     case "3":
       reply = `Para agendar o seu *Corte de Cabelo e Barba*, selecione um dos próximos dias disponíveis!\n\n`;
       for (let i = 0; i < nextDays.length; i++) {
         reply = `${reply}${nextDays[i]}\n`;
       }
-      console.log(reply);
       return reply;
     default:
       return `Olá teste ${name}! Tudo certo?\nPara agendar atendimento com Felipe selecione umas das seguintes opções:\n\n*1* - Cabelo\n*2* - Barba\n*3* - Cabelo e Barba`;
