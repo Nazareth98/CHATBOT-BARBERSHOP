@@ -1,5 +1,5 @@
-const { doc, setDoc, getDocs } = require("firebase/firestore");
-const { db, collection, firebaseConfig } = require("../firebase/index");
+const { getDocs } = require("firebase/firestore");
+const { db, collection } = require("../firebase/index");
 
 const getData = async (folder) => {
   let dataArr = [];

@@ -11,6 +11,9 @@ const createClient = async ({ name, phoneNumber }) => {
   });
 };
 
+const createSchedule = (user) => {};
+
 module.exports = {
   createClient,
+  v,
 };

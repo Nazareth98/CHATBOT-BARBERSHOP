@@ -1,5 +1,5 @@
 const { getData } = require("../database/getData");
-const { createClient } = require("../database/createClient");
+const { createClient } = require("../database/createData");
 
 const isRegistered = async (user) => {
   const clients = await getData("clientes");
