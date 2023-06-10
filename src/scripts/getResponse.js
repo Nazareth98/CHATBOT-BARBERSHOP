@@ -2,6 +2,7 @@ const axios = require("axios");
 const { doc, setDoc, getDocs } = require("firebase/firestore");
 const { db, collection, firebaseConfig } = require("../firebase/index");
 const { v4: uuidv4 } = require("uuid");
+const { google } = require("googleapis");
 const { formatDayOfWeek, formatMonth } = require("./formatDate");
 
 const getData = async (folder) => {
@@ -19,6 +20,8 @@ const createClient = async (name, phoneNumber) => {
     lastService: null,
   });
 };
+
+const createScheduleTime = async () => {};
 
 const isRegistered = async (name, phoneNumber) => {
   const clientes = await getData("clientes");
@@ -95,21 +98,19 @@ const getResponse = async ({ keyword, chatId, name, phoneNumber }) => {
       let dayOfMonth = day.toDateString().slice(8, 10);
       let month = formatMonth(day.toDateString().slice(4, 7));
 
-      nextDays.push(`*${index}* - ${dayOfWeek}, ${dayOfMonth} de ${month}.`);
+      nextDays.push(`*[${index}]* - ${dayOfWeek}, ${dayOfMonth} de ${month}.`);
     });
   });
 
   //console.log(servicos);
   //console.log(clientes);
   //console.log(agendamentos);
-  g;
   // se esse cliente ja esta cadastrado
 
   console.log("mensagem recebida:", keyword);
 
   switch (keyword) {
     case "1":
-      createService();
       reply = `Para agendar o seu *Corte de Cabelo*, selecione um dos próximos dias disponíveis!\n\n`;
       for (let i = 0; i < nextDays.length; i++) {
         reply = `${reply}${nextDays[i]}\n`;
@@ -128,7 +129,7 @@ const getResponse = async ({ keyword, chatId, name, phoneNumber }) => {
       }
       return reply;
     default:
-      return `Olá teste ${name}! Tudo certo?\nPara agendar atendimento com Felipe selecione umas das seguintes opções:\n\n*1* - Cabelo\n*2* - Barba\n*3* - Cabelo e Barba`;
+      return `Olá teste ${name}! Tudo certo?\nPara agendar atendimento com Felipe selecione umas das seguintes opções:\n\n*[1]* - Cabelo\n*[2]* - Barba\n*[3]* - Cabelo e Barba`;
   }
 };
 
