@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
-const { doc, setDoc, getDocs } = require("firebase/firestore");
-const { db, collection, firebaseConfig } = require("../firebase/index");
+const { db, doc, setDoc } = require("../firebase/index");
+const { getClient, getService } = require("./getData");
 
 const createClient = async ({ name, phoneNumber }) => {
   await setDoc(doc(db, "clientes", uuidv4()), {
@@ -11,9 +11,21 @@ const createClient = async ({ name, phoneNumber }) => {
   });
 };
 
-const createSchedule = (user) => {};
+const createSchedule = async (user) => {
+  const client = await getClient(user);
+  await setDoc(doc(db, "clientes", uuidv4()), {
+    client: client,
+    service: null,
+    barber: null,
+    lastService: null,
+  });
+};
+
+const createGoogleSchedule = (user) => {};
 
 module.exports = {
   createClient,
-  v,
+  createSchedule,
 };
+
+// FINALIZAR FUNÇÃO createSchedule(USER, KEYWORD)

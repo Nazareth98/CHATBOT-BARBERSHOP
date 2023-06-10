@@ -1,42 +1,37 @@
-const axios = require("axios");
-const { doc, setDoc, getDocs } = require("firebase/firestore");
-const { db, collection, firebaseConfig } = require("../firebase/index");
-const { v4: uuidv4 } = require("uuid");
-const { google } = require("googleapis");
-const { formatDayOfWeek, formatMonth } = require("./formatDate");
-const { getData } = require("../database/getData");
 const { isRegistered } = require("./isRegistered");
 const { formatedWorkingDays } = require("../services/getWorkingDays");
-
-// Exemplo de uso
+const { getData, getSchedule } = require("../database/getData");
+const { cancelSchedule } = require("./cancelSchedule");
+const { createSchedule } = require("../database/createData");
+const { updateSchedule } = require("../database/updateData");
 
 const getReply = async (user) => {
+  const services = await getData("servicos");
+  const barbers = await getData("barbeiros");
+  const schedule = await getSchedule(user);
+
   await isRegistered(user);
+
   let listWorkingDays = await formatedWorkingDays();
-  console.log(listWorkingDays);
   console.log("mensagem recebida:", user.keyword);
 
-  switch (user.keyword) {
-    case "1":
-      reply = `Para agendar o seu *Corte de Cabelo*, selecione um dos próximos dias disponíveis!\n\n`;
-      for (let i = 0; i < listWorkingDays.length; i++) {
-        reply = `${reply}${listWorkingDays[i]}\n`;
-      }
-      return reply;
-    case "2":
-      reply = `Para agendar o seu *Corte da sua Barba*, selecione um dos próximos dias disponíveis!\n\n`;
-      for (let i = 0; i < listWorkingDays.length; i++) {
-        reply = `${reply}${listWorkingDays[i]}\n`;
-      }
-      return reply;
-    case "3":
-      reply = `Para agendar o seu *Corte de Cabelo e Barba*, selecione um dos próximos dias disponíveis!\n\n`;
-      for (let i = 0; i < listWorkingDays.length; i++) {
-        reply = `${reply}${listWorkingDays[i]}\n`;
-      }
-      return reply;
-    default:
-      return `Olá teste ${user.name}! Tudo certo?\nPara agendar atendimento com Felipe selecione umas das seguintes opções:\n\n*[1]* - Cabelo\n*[2]* - Barba\n*[3]* - Cabelo e Barba`;
+  if ((user.keyword = "0")) {
+    return cancelSchedule(user);
+  } else if (schedule !== null && schedule.barber === null) {
+    await updateSchedule(user, keyword, "barber");
+    reply = `${user.name}, para realizar o agendamento com o barbeiro *${schedule.barber}* selecione umas das seguintes opções:\n\n`;
+    for (let i = 0; i < services.length; i++) {
+      reply = `${reply}\n*[${i + 1}]* - ${services[i].name}`;
+    }
+    return `${reply}\n\n *[0]* - Cancelar agendamento`;
+  } else if (schedule !== null && schedule.barber !== null) {
+  } else {
+    createSchedule(user);
+    reply = `Olá ${user.name}! Tudo certo?\nPara agendar atendimento, escolha primeiro um de nosso barbeiros!\n\n`;
+    for (let i = 0; i < barbers.length; i++) {
+      reply = `${reply}\n*[${i + 1}] - ${barbers[i].name}*`;
+    }
+    return `${reply}\n\n *[0]* - Cancelar agendamento`;
   }
 };
 
