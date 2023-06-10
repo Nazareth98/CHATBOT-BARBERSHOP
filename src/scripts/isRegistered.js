@@ -6,7 +6,7 @@ const isRegistered = async (user) => {
   console.log(clients);
   let isRegistered = false;
 
-  for (let i; i < clientes.length; i++) {
+  for (let i; i < clients.length; i++) {
     if (clients[i].phoneNumber === user.phoneNumber) {
       isRegistered = true;
     }

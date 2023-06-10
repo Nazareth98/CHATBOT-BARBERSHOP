@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
+const { doc, setDoc, getDocs } = require("firebase/firestore");
 const { db, collection, firebaseConfig } = require("../firebase/index");
 
 const createClient = async ({ name, phoneNumber }) => {

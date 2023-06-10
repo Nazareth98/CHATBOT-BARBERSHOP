@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { formatDayOfWeek, formatMonth } = require("./formatDate");
+const { formatDayOfWeek, formatMonth } = require("../scripts/formatDate");
 
 // Função para verificar se uma data é feriado no Brasil e no Paraná
 const getWorkingDays = async () => {
@@ -41,8 +41,8 @@ const isHoliday = (date, holidays) => {
 };
 
 const formatedWorkingDays = async () => {
+  let nextDays = [];
   await getWorkingDays().then((workingDays) => {
-    let nextDays = [];
     workingDays.forEach((day, index) => {
       let dayOfWeek = formatDayOfWeek(day.toDateString().slice(0, 3));
       let dayOfMonth = day.toDateString().slice(8, 10);
@@ -50,8 +50,8 @@ const formatedWorkingDays = async () => {
 
       nextDays.push(`*[${index}]* - ${dayOfWeek}, ${dayOfMonth} de ${month}.`);
     });
-    return nextDays;
   });
+  return nextDays;
 };
 
 module.exports = {
