@@ -41,14 +41,14 @@ client.initialize();
 // Escuta mensagens recebidas
 client.on("message", async (msg) => {
   // Transforma número em ID cadastrado no BD
-  const message = {
+  const user = {
     keyword: msg.body.toLocaleLowerCase(),
     chatId: msg.from,
     name: msg._data.notifyName,
     phoneNumber: formatToNumber(msg.from),
   };
 
-  const messageReply = await getReply(message);
+  const messageReply = await getReply(user);
   console.log(messageReply);
   if (messageReply) {
     client.sendMessage(msg.from, messageReply);
