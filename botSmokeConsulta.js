@@ -1,7 +1,7 @@
 const { Client, LocalAuth } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const { formatToNumber } = require("./src/scripts/formatObjects");
-const { getResponse } = require("./src/scripts/getResponse");
+const { getReply } = require("./src/scripts/getReply");
 
 // PORTA ONDE O SERVIÇO SERÁ INICIADO
 const idClient = "bot-Barber";
@@ -48,7 +48,7 @@ client.on("message", async (msg) => {
     phoneNumber: formatToNumber(msg.from),
   };
 
-  const messageReply = await getResponse(message);
+  const messageReply = await getReply(message);
   console.log(messageReply);
   if (messageReply) {
     client.sendMessage(msg.from, messageReply);
