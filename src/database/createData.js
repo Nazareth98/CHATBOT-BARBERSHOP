@@ -3,12 +3,14 @@ const { db, doc, setDoc } = require("../firebase/index");
 const { getClient, getService } = require("./getData");
 
 const createClient = async ({ name, phoneNumber }) => {
-  await setDoc(doc(db, "clientes", uuidv4()), {
-    name: name,
-    phoneNumber: phoneNumber,
-    totalServices: 0,
-    lastService: null,
-  });
+  if (!phoneNumber.includes("status")) {
+    await setDoc(doc(db, "clientes", uuidv4()), {
+      name: name,
+      phoneNumber: phoneNumber,
+      totalServices: 0,
+      lastService: null,
+    });
+  }
 };
 
 const createSchedule = async (user) => {

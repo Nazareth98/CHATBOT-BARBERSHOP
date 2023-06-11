@@ -1,4 +1,5 @@
-const { db, collection, getDocs } = require("../firebase/index");
+const { db } = require("../firebase/index");
+const { getDocs, collection } = require("firebase/firestore/lite");
 
 const getData = async (folder) => {
   let dataArr = [];
@@ -22,7 +23,7 @@ const getSchedule = async (user) => {
 
 const getClient = async (user) => {
   const clients = await getData("clientes");
-  const client = null;
+  let client = null;
 
   for (item of clients) {
     if (item.phoneNumber === user.phoneNumber) {

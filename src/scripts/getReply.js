@@ -15,7 +15,7 @@ const getReply = async (user) => {
   let listWorkingDays = await formatedWorkingDays();
   console.log("mensagem recebida:", user.keyword);
 
-  if ((user.keyword = "0")) {
+  if (user.keyword === "0") {
     return cancelSchedule(user);
   } else if (schedule !== null && schedule.barber === null) {
     await updateSchedule(user, keyword, "barber");
@@ -29,9 +29,9 @@ const getReply = async (user) => {
     createSchedule(user);
     reply = `Olá ${user.name}! Tudo certo?\nPara agendar atendimento, escolha primeiro um de nosso barbeiros!\n\n`;
     for (let i = 0; i < barbers.length; i++) {
-      reply = `${reply}\n*[${i + 1}] - ${barbers[i].name}*`;
+      reply = `${reply}\n*[${i + 1}]* - ${barbers[i].name}`;
     }
-    return `${reply}\n\n *[0]* - Cancelar agendamento`;
+    return `${reply}\n\n*[0]* - Cancelar agendamento`;
   }
 };
 

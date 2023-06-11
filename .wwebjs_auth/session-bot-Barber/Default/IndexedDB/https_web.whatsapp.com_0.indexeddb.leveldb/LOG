@@ -1,16 +1,18 @@
-2023/06/10-15:13:59.764 2488 Reusing MANIFEST D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/06/10-15:13:59.765 2488 Recovering log #466
-2023/06/10-15:13:59.871 2488 Reusing old log D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000466.log 
-2023/06/10-15:14:19.017 2488 Level-0 table #473: started
-2023/06/10-15:14:19.128 2488 Level-0 table #473: 947712 bytes OK
-2023/06/10-15:14:19.150 2488 Delete type=0 #466
-2023/06/10-15:14:19.152 2488 Compacting 1@1 + 3@2 files
-2023/06/10-15:14:19.386 2488 Generated table #474@1: 83690 keys, 2231844 bytes
-2023/06/10-15:14:19.577 2488 Generated table #475@1: 28018 keys, 2209871 bytes
-2023/06/10-15:14:19.727 2488 Generated table #476@1: 38685 keys, 1789946 bytes
-2023/06/10-15:14:19.727 2488 Compacted 1@1 + 3@2 files => 6231661 bytes
-2023/06/10-15:14:19.749 2488 compacted to: files[ 0 0 3 0 0 0 0 ]
-2023/06/10-15:14:19.750 2488 Delete type=2 #468
-2023/06/10-15:14:19.750 2488 Delete type=2 #469
-2023/06/10-15:14:19.750 2488 Delete type=2 #470
-2023/06/10-15:14:19.750 2488 Delete type=2 #473
+2023/06/11-15:56:39.747 5358 Reusing MANIFEST D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/11-15:56:39.747 5358 Recovering log #570
+2023/06/11-15:56:39.843 5358 Reusing old log D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000570.log 
+2023/06/11-15:56:59.396 51fc Level-0 table #578: started
+2023/06/11-15:56:59.539 51fc Level-0 table #578: 1011341 bytes OK
+2023/06/11-15:56:59.560 51fc Delete type=0 #570
+2023/06/11-15:56:59.565 2b9c Compacting 1@1 + 4@2 files
+2023/06/11-15:56:59.861 2b9c Generated table #579@1: 83249 keys, 2232670 bytes
+2023/06/11-15:57:00.120 2b9c Generated table #580@1: 49595 keys, 2235576 bytes
+2023/06/11-15:57:00.336 2b9c Generated table #581@1: 25094 keys, 2198616 bytes
+2023/06/11-15:57:00.535 2b9c Generated table #582@1: 25097 keys, 547561 bytes
+2023/06/11-15:57:00.535 2b9c Compacted 1@1 + 4@2 files => 7214423 bytes
+2023/06/11-15:57:00.573 2b9c compacted to: files[ 0 0 4 0 0 0 0 ]
+2023/06/11-15:57:00.573 2b9c Delete type=2 #572
+2023/06/11-15:57:00.573 2b9c Delete type=2 #573
+2023/06/11-15:57:00.574 2b9c Delete type=2 #574
+2023/06/11-15:57:00.574 2b9c Delete type=2 #575
+2023/06/11-15:57:00.574 2b9c Delete type=2 #578
