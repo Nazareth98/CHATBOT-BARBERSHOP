@@ -1,28 +1,58 @@
-const { db, firebaseConfig, updateDoc, doc } = require("../firebase/index");
-const { getClient, getService, getSchedule } = require("./getData");
+const { db } = require("../firebase/index");
+const { updateDoc, doc } = require("firebase/firestore/lite");
+const { getClient, getService, getData, getSchedule } = require("./getData");
 
 const updateClient = () => {};
 const updateBarber = () => {};
 const updateGoogleSchedule = () => {};
 
-const updateSchedule = async (user, keyword, field) => {
+const updateSchedule = async (user, field) => {
   const barbers = await getData("barbeiros");
+  const services = await getData("servicos");
   const schedule = await getSchedule(user);
+  console.log("barbers está vindo assim: ", barbers);
   const documentRef = doc(db, "agendamentos", schedule.id);
 
-  // Atualize o documento com os novos dados
-  updateDoc(documentRef, {
-    client: schedule.client,
-    service: schedule.service,
-    barber: barbers[keyword - 1],
-    lastService: schedule.lastService,
-  })
-    .then(() => {
-      console.log("Documento atualizado com sucesso!");
-    })
-    .catch((error) => {
-      console.error("Erro ao atualizar o documento:", error);
-    });
+  // Verifique se field é igual a "barber" antes de atualizar o documento
+  if (field === "barber") {
+    // Verifique se user.keyword é um valor válido antes de acessar barbers
+    if (user.keyword >= 1 && user.keyword <= barbers.length) {
+      // Atualize o documento com o barbeiro correto
+      const selectedBarber = barbers[user.keyword - 1];
+
+      await updateDoc(documentRef, {
+        barber: { id: selectedBarber.id, data: selectedBarber.data },
+      })
+        .then(() => {
+          console.log("Documento atualizado com sucesso!");
+        })
+        .catch((error) => {
+          console.error("Erro ao atualizar o documento:", error);
+        });
+    } else {
+      console.error("Índice do barbeiro inválido!");
+    }
+  }
+
+  if (field === "service") {
+    // Verifique se user.keyword é um valor válido antes de acessar barbers
+    if (user.keyword >= 1 && user.keyword <= services.length) {
+      // Atualize o documento com o barbeiro correto
+      const selectedService = services[user.keyword - 1];
+
+      await updateDoc(documentRef, {
+        service: { id: selectedService.id, data: selectedService.data },
+      })
+        .then(() => {
+          console.log("Documento atualizado com sucesso!");
+        })
+        .catch((error) => {
+          console.error("Erro ao atualizar o documento:", error);
+        });
+    } else {
+      console.error("Índice do barbeiro inválido!");
+    }
+  }
 };
 
 module.exports = {

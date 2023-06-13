@@ -3,21 +3,20 @@ const { createClient } = require("../database/createData");
 
 const isRegistered = async (user) => {
   const clients = await getData("clientes");
-  console.log(clients);
   let isRegistered = false;
 
-  for (let i; i < clients.length; i++) {
-    if (clients[i].phoneNumber === user.phoneNumber) {
+  for (let i = 0; i < clients.length; i++) {
+    if (clients[i].data.phoneNumber === user.phoneNumber) {
       isRegistered = true;
+      break; // Se encontrou um cliente correspondente, interrompe o loop
     }
   }
 
-  if (isRegistered === false) {
-    createClient(user);
-    return isRegistered;
-  } else {
-    return isRegistered;
+  if (!isRegistered) {
+    createClient(user); // Cria o cliente somente se não estiver registrado
   }
+
+  return isRegistered;
 };
 
 module.exports = {

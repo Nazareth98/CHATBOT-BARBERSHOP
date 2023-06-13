@@ -4,18 +4,25 @@ const { getDocs, collection } = require("firebase/firestore/lite");
 const getData = async (folder) => {
   let dataArr = [];
   const querySnapshot = await getDocs(collection(db, folder));
-  querySnapshot.forEach((doc) => dataArr.push(doc.data()));
+  querySnapshot.forEach((doc) =>
+    dataArr.push({ id: doc.id, data: doc.data() })
+  );
 
   return dataArr;
 };
 
 const getSchedule = async (user) => {
   const schedules = await getData("agendamentos");
-  const clientSchedule = null;
-
-  for (item of schedules) {
-    if (item.client.phoneNumber === user.phoneNumber) {
-      clientSchedule = item;
+  let clientSchedule = null;
+  if (schedules.length > 0) {
+    for (let i = 0; i < schedules.length; i++) {
+      if (
+        schedules[i].data.client.hasOwnProperty("data") &&
+        schedules[i].data.client.data.phoneNumber === user.phoneNumber
+      ) {
+        clientSchedule = schedules[i];
+        break;
+      }
     }
   }
   return clientSchedule;
@@ -26,7 +33,7 @@ const getClient = async (user) => {
   let client = null;
 
   for (item of clients) {
-    if (item.phoneNumber === user.phoneNumber) {
+    if (item.data.phoneNumber === user.phoneNumber) {
       client = item;
     }
   }
@@ -35,10 +42,10 @@ const getClient = async (user) => {
 
 const getService = async (keyword) => {
   const services = await getData("servicos");
-  const service = null;
+  let service = null;
 
   for (item of services) {
-    if (item.index === keyword - 1) {
+    if (item.data.index === keyword - 1) {
       service = item;
     }
   }

@@ -13,14 +13,18 @@ const createClient = async ({ name, phoneNumber }) => {
   }
 };
 
-const createSchedule = async (user) => {
-  const client = await getClient(user);
-  await setDoc(doc(db, "clientes", uuidv4()), {
-    client: client,
-    service: null,
-    barber: null,
-    lastService: null,
-  });
+const createSchedule = async (user, schedule) => {
+  if (schedule !== null) {
+    return null;
+  } else {
+    const client = await getClient(user);
+    await setDoc(doc(db, "agendamentos", uuidv4()), {
+      client: client,
+      service: null,
+      barber: null,
+      lastService: null,
+    });
+  }
 };
 
 const createGoogleSchedule = (user) => {};

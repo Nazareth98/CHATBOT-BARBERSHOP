@@ -7,7 +7,7 @@ const cancelSchedule = async (user) => {
   const schedules = await getData("agendamentos");
 
   for (item of schedules) {
-    if (item.client.phoneNumber === user.phoneNumber) {
+    if (item.data.client.phoneNumber === user.phoneNumber) {
       const documentRef = doc(db, "agendamentos", item.id);
       deleteDoc(documentRef)
         .then(() => {
