@@ -5,7 +5,7 @@ const { cancelSchedule } = require("./cancelSchedule");
 const { createSchedule } = require("../database/createData");
 const { updateSchedule } = require("../database/updateData");
 
-const getReply = async (user, calendar) => {
+const getReply = async (user, calendar, createEvents) => {
   const services = await getData("servicos");
   const barbers = await getData("barbeiros");
   let schedule = await getSchedule(user);
@@ -19,6 +19,11 @@ const getReply = async (user, calendar) => {
 
   if (user.keyword === "0") {
     return cancelSchedule(user);
+  }
+
+  if (user.keyword === "criar") {
+    await createEvents();
+    return "Criado com sucesso";
   }
 
   if (schedule !== null) {

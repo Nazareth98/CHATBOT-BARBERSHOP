@@ -8,6 +8,7 @@ const {
 const express = require("express");
 const { google } = require("googleapis");
 const app = express();
+const axios = require("axios");
 
 // PORTA ONDE O SERVIÇO SERÁ INICIADO
 const idClient = "bot-Barber";
@@ -85,7 +86,7 @@ app.get("/events", async (req, res) => {
 
     // Data máxima para consulta (5 dias no futuro)
     const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() + 5); // Adiciona 5 dias para incluir os próximos 5 dias
+    maxDate.setDate(maxDate.getDate() + 7); // Adiciona 10 dias para incluir os próximos 5 dias
     maxDate.setHours(23, 59, 59); // Define o horário para o final do dia
 
     // Consulta dos eventos no Google Calendar
@@ -104,39 +105,152 @@ app.get("/events", async (req, res) => {
   }
 });
 
-// Rota para criar um novo evento
+// Rota para criar eventos disponíveis
 app.post("/events", async (req, res) => {
   try {
     // Criação do cliente do Google Calendar
     const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
 
-    // Dados do novo evento (altere conforme necessário)
-    const event = {
-      summary: "Novo Evento",
-      start: {
-        dateTime: "2023-06-30T10:00:00-07:00",
-        timeZone: "America/Los_Angeles",
-      },
-      end: {
-        dateTime: "2023-06-30T12:00:00-07:00",
-        timeZone: "America/Los_Angeles",
-      },
+    // Função auxiliar para formatar a data e hora no formato ISO 8601
+    const formatDateTime = (date, hours, minutes) => {
+      const formattedDate = date.toISOString().split("T")[0];
+      const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+        .toString()
+        .padStart(2, "0")}`;
+      return `${formattedDate}T${formattedTime}:00`;
     };
 
-    // Criação do evento no Google Calendar
-    const response = await calendar.events.insert({
-      calendarId: "primary",
-      resource: event,
-    });
+    // Dados do novo evento
+    const daysOfWeek = [1, 2, 3, 4, 5]; // Dias da semana para os eventos
+    const startTimeMorning = { hours: 9, minutes: 0 }; // Horário de início da manhã
+    const endTimeMorning = { hours: 11, minutes: 30 }; // Horário de fim da manhã
+    const startTimeAfternoon = { hours: 14, minutes: 0 }; // Horário de início da tarde
+    const endTimeAfternoon = { hours: 19, minutes: 0 }; // Horário de fim da tarde
 
-    const createdEvent = response.data;
+    // Array para armazenar os eventos criados
+    const createdEvents = [];
 
-    res.json(createdEvent);
+    // Criação dos eventos
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() + 1); // Começa a partir de amanhã
+    startDate.setHours(0, 0, 0, 0); // Define o horário para 00:00:00
+
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() + 30); // Cria eventos para os próximos 30 dias
+
+    const currentDate = new Date(startDate);
+    while (currentDate <= endDate) {
+      const currentDayOfWeek = currentDate.getDay();
+
+      if (daysOfWeek.includes(currentDayOfWeek)) {
+        const startTimeMorningCopy = { ...startTimeMorning };
+        const endTimeMorningCopy = { ...endTimeMorning };
+        const startTimeAfternoonCopy = { ...startTimeAfternoon };
+        const endTimeAfternoonCopy = { ...endTimeAfternoon };
+
+        while (
+          startTimeMorningCopy.hours < endTimeMorningCopy.hours ||
+          (startTimeMorningCopy.hours === endTimeMorningCopy.hours &&
+            startTimeMorningCopy.minutes + 30 <= endTimeMorningCopy.minutes)
+        ) {
+          const eventMorning = {
+            summary: "Disponível",
+            colorId: "11", // Define a cor do evento como vermelho
+            start: {
+              dateTime: formatDateTime(
+                currentDate,
+                startTimeMorningCopy.hours,
+                startTimeMorningCopy.minutes
+              ),
+              timeZone: "America/Sao_Paulo",
+            },
+            end: {
+              dateTime: formatDateTime(
+                currentDate,
+                startTimeMorningCopy.hours,
+                startTimeMorningCopy.minutes + 30 // Define a duração do evento como 30 minutos
+              ),
+              timeZone: "America/Sao_Paulo",
+            },
+          };
+
+          createdEvents.push(
+            await calendar.events.insert({
+              calendarId: "primary",
+              resource: eventMorning,
+            })
+          );
+
+          startTimeMorningCopy.minutes += 30;
+          if (startTimeMorningCopy.minutes >= 60) {
+            startTimeMorningCopy.minutes = 0;
+            startTimeMorningCopy.hours++;
+          }
+        }
+
+        while (
+          startTimeAfternoonCopy.hours < endTimeAfternoonCopy.hours ||
+          (startTimeAfternoonCopy.hours === endTimeAfternoonCopy.hours &&
+            startTimeAfternoonCopy.minutes + 30 <= endTimeAfternoonCopy.minutes)
+        ) {
+          const eventAfternoon = {
+            summary: "Disponível",
+            colorId: "11", // Define a cor do evento como vermelho
+            start: {
+              dateTime: formatDateTime(
+                currentDate,
+                startTimeAfternoonCopy.hours,
+                startTimeAfternoonCopy.minutes
+              ),
+              timeZone: "America/Sao_Paulo",
+            },
+            end: {
+              dateTime: formatDateTime(
+                currentDate,
+                startTimeAfternoonCopy.hours,
+                startTimeAfternoonCopy.minutes + 30 // Define a duração do evento como 30 minutos
+              ),
+              timeZone: "America/Sao_Paulo",
+            },
+          };
+
+          createdEvents.push(
+            await calendar.events.insert({
+              calendarId: "primary",
+              resource: eventAfternoon,
+            })
+          );
+
+          startTimeAfternoonCopy.minutes += 30;
+          if (startTimeAfternoonCopy.minutes >= 60) {
+            startTimeAfternoonCopy.minutes = 0;
+            startTimeAfternoonCopy.hours++;
+          }
+        }
+      }
+
+      currentDate.setDate(currentDate.getDate() + 1); // Avança para o próximo dia
+    }
+
+    res.json(createdEvents);
   } catch (error) {
-    console.error("Erro ao criar evento:", error);
-    res.status(500).send("Erro ao criar evento.");
+    console.error("Erro ao criar eventos:", error);
+    res.status(500).send("Erro ao criar eventos.");
   }
 });
+
+// Função para criar os eventos disponíveis
+const createEvents = async () => {
+  try {
+    const response = await axios.post("http://localhost:8080/events");
+    const createdEvents = response.data;
+    console.log("Eventos criados:", createdEvents);
+  } catch (error) {
+    console.error("Erro ao criar eventos:", error);
+  }
+};
+
+// Chamar a função para criar os eventos
 
 // Inicie o servidor
 app.listen(port, () => {
@@ -188,7 +302,7 @@ client.on("message", async (msg) => {
   if (msg.from.includes("@g.us")) {
     return false;
   } else {
-    const messageReply = await getReply(user, schedules);
+    const messageReply = await getReply(user, schedules, createEvents);
     console.log(messageReply);
     if (messageReply) {
       client.sendMessage(msg.from, messageReply);

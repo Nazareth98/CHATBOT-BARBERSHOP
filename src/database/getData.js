@@ -17,6 +17,7 @@ const getSchedule = async (user) => {
   if (schedules.length > 0) {
     for (let i = 0; i < schedules.length; i++) {
       if (
+        schedules[i].data.client !== null &&
         schedules[i].data.client.hasOwnProperty("data") &&
         schedules[i].data.client.data.phoneNumber === user.phoneNumber
       ) {
