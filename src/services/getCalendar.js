@@ -1,13 +1,38 @@
-const express = require("express");
-const app = express();
 const fs = require("fs").promises;
 const path = require("path");
 const process = require("process");
 const { authenticate } = require("@google-cloud/local-auth");
 const { google } = require("googleapis");
+const express = require("express");
+const app = express();
+const axios = require("axios");
+
+const PORT = 8080;
+
+const getEvent = async (calendarId, eventId) => {
+  const apiKey = "AIzaSyAA0XMO0KL6BjTnHE_Pkh1YoHoXYH3uOFI"; // Substitua pela sua chave de API do Google Agenda
+
+  const url = `https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events/${eventId}?key=${apiKey}`;
+
+  try {
+    const response = await axios.get(url);
+    const event = response.data;
+    console.log(event); // Faça o que desejar com o evento retornado
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Chame a função passando o ID da agenda e o ID do evento desejado
+getEvent(
+  "barbeariafelipe88@gmail.com",
+  "7vhflnl45ajnf202vasvqoeafi_20230614T120000Z"
+);
+
+app.listen(PORT, () => console.log(`Server is running at ${PORT}.`));
 
 // If modifying these scopes, delete token.json.
-const SCOPES = ["https://www.googleapis.com/auth/calendar.events"];
+const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
@@ -71,9 +96,8 @@ async function authorize() {
  * Lists the next 10 events on the user's primary calendar.
  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
-
-const calendar = google.calendar({ version: "v3", auth });
 async function listEvents(auth) {
+  const calendar = google.calendar({ version: "v3", auth });
   const res = await calendar.events.list({
     calendarId: "primary",
     timeMin: new Date().toISOString(),
@@ -92,43 +116,5 @@ async function listEvents(auth) {
     console.log(`${start} - ${event.summary}`);
   });
 }
-
-var event = {
-  summary: "Google I/O 2015",
-  location: "800 Howard St., San Francisco, CA 94103",
-  description: "A chance to hear more about Google's developer products.",
-  start: {
-    dateTime: "2023-06-14T09:00:00-07:00",
-    timeZone: "America/Sao_Paulo",
-  },
-  end: {
-    dateTime: "2023-06-14T17:00:00-07:00",
-    timeZone: "America/Sao_Paulo",
-  },
-  recurrence: ["RRULE:FREQ=DAILY;COUNT=2"],
-  attendees: [{ email: "lpage@example.com" }, { email: "sbrin@example.com" }],
-  reminders: {
-    useDefault: false,
-    overrides: [
-      { method: "email", minutes: 24 * 60 },
-      { method: "popup", minutes: 10 },
-    ],
-  },
-};
-
-calendar.events.insert(
-  {
-    auth: auth,
-    calendarId: "primary",
-    resource: event,
-  },
-  function (err, event) {
-    if (err) {
-      console.log("There was an error contacting the Calendar service: " + err);
-      return;
-    }
-    console.log("Event created: %s", event.htmlLink);
-  }
-);
 
 authorize().then(listEvents).catch(console.error);
