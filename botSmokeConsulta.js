@@ -15,6 +15,7 @@ const idClient = "bot-Barber";
 const port = 8080;
 
 let eventsArr = [];
+let dataValidacao;
 
 const credentials = {
   client_id:
@@ -183,6 +184,7 @@ client.on("qr", (qr) => {
 // Bot conectado
 client.on("ready", () => {
   console.log("Client is ready!");
+  dataValidacao = new Date();
 });
 
 // Inicializa o Bot
@@ -198,19 +200,15 @@ client.on("message", async (msg) => {
     phoneNumber: formatToNumber(msg.from),
   };
 
-  if (user.keyword === "alterar") {
-    updateEvent();
-    client.sendMessage(msg.from, "alterado, olha na agenda");
-    return false;
-  }
-
-  if (msg.from.includes("@g.us")) {
-    return false;
-  } else {
-    const messageReply = await getReply(user, eventsArr, client);
-    console.log(messageReply);
-    if (messageReply) {
-      client.sendMessage(msg.from, messageReply);
+  if (message.timestamp > dataValidacao) {
+    if (msg.from.includes("@g.us")) {
+      return false;
+    } else {
+      const messageReply = await getReply(user, eventsArr, client);
+      console.log(messageReply);
+      if (messageReply) {
+        client.sendMessage(msg.from, messageReply);
+      }
     }
   }
 });

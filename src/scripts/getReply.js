@@ -8,6 +8,7 @@ const { confirmSchedule } = require("./confirmSchedule");
 const { formatDayOfWeek } = require("./formatDate");
 const moment = require("moment");
 const { getNextDays } = require("./getNextDays");
+const { deleteSchedule } = require("../database/deleteData");
 
 const getReply = async (user, eventsArr) => {
   const services = await getData("servicos");
@@ -22,6 +23,7 @@ const getReply = async (user, eventsArr) => {
   let reply = "";
 
   if (user.keyword === "0") {
+    await deleteSchedule(user);
     return cancelSchedule(user);
   }
 
@@ -52,11 +54,6 @@ const getReply = async (user, eventsArr) => {
     } else if (schedule.data.date === null) {
       await updateSchedule(user, "dayOfWeek", eventsArr);
       schedule = await getSchedule(user);
-      console.log("data sem slice: ", eventsArr[62].date.slice(8, 10));
-      console.log(
-        "data de selectedDay: ",
-        schedule.data.date.dayOfWeek.dayOfMonth.toString()
-      );
       let selectedDay = schedule.data.date.dayOfWeek.dayOfMonth.toString();
       reply = `${user.name}, escolha um dos próximos horários disponíves:\n\n`;
       for (let i = 0; i < eventsArr.length; i++) {
@@ -80,6 +77,7 @@ const getReply = async (user, eventsArr) => {
       schedule.data.barber !== null
     ) {
       schedule = await getSchedule(user);
+      deleteSchedule(user);
       confirmSchedule(schedule);
       reply = `Tudo certo, só comparecer na data escolhida!`;
     }
