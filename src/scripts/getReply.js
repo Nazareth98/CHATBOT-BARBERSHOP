@@ -6,6 +6,7 @@ const { createSchedule } = require("../database/createData");
 const { updateSchedule } = require("../database/updateData");
 const { confirmSchedule } = require("./confirmSchedule");
 const { formatDayOfWeek } = require("./formatDate");
+const { formatoHour } = require("./formatoHour")
 const moment = require("moment");
 const { getNextDays } = require("./getNextDays");
 
@@ -52,11 +53,7 @@ const getReply = async (user, eventsArr) => {
     } else if (schedule.data.date === null) {
       await updateSchedule(user, "dayOfWeek", eventsArr);
       schedule = await getSchedule(user);
-      console.log("data sem slice: ", eventsArr[62].date.slice(8, 10));
-      console.log(
-        "data de selectedDay: ",
-        schedule.data.date.dayOfWeek.dayOfMonth.toString()
-      );
+
       let selectedDay = schedule.data.date.dayOfWeek.dayOfMonth.toString();
       reply = `${user.name}, escolha um dos próximos horários disponíves:\n\n`;
       for (let i = 0; i < eventsArr.length; i++) {
@@ -64,7 +61,7 @@ const getReply = async (user, eventsArr) => {
           eventsArr[i].summary === "Livre" &&
           eventsArr[i].date.slice(8, 10) === selectedDay
         ) {
-          reply += `\n*[${i + 1}]* - ${eventsArr[i].date}`;
+          reply += `\n*[${i + 1}]* - ${formatoHour(eventsArr[i].date)}`;
         }
       }
       reply += "\n\n*[0]* - Cancelar agendamento";

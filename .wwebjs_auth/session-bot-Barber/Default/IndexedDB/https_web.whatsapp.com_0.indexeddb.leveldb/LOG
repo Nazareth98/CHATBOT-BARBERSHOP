@@ -1,36 +1,20 @@
-2023/06/15-13:06:58.991 1b50 Reusing MANIFEST D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/06/15-13:06:58.992 1b50 Recovering log #987
-2023/06/15-13:06:59.191 1b50 Reusing old log D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000987.log 
-2023/06/15-13:07:23.271 4160 Level-0 table #995: started
-2023/06/15-13:07:23.430 4160 Level-0 table #995: 1172912 bytes OK
-2023/06/15-13:07:23.472 4160 Delete type=0 #987
-2023/06/15-13:07:24.285 23b4 Compacting 1@1 + 4@2 files
-2023/06/15-13:07:24.533 23b4 Generated table #996@1: 38692 keys, 2210968 bytes
-2023/06/15-13:07:24.674 23b4 Generated table #997@1: 3879 keys, 2164954 bytes
-2023/06/15-13:07:24.859 23b4 Generated table #998@1: 36618 keys, 2251156 bytes
-2023/06/15-13:07:25.051 23b4 Generated table #999@1: 80177 keys, 2223728 bytes
-2023/06/15-13:07:25.098 23b4 Generated table #1000@1: 7633 keys, 158379 bytes
-2023/06/15-13:07:25.098 23b4 Compacted 1@1 + 4@2 files => 9009185 bytes
-2023/06/15-13:07:25.126 23b4 compacted to: files[ 0 0 5 0 0 0 0 ]
-2023/06/15-13:07:25.126 23b4 Delete type=2 #989
-2023/06/15-13:07:25.126 23b4 Delete type=2 #990
-2023/06/15-13:07:25.126 23b4 Delete type=2 #991
-2023/06/15-13:07:25.126 23b4 Delete type=2 #992
-2023/06/15-13:07:25.126 23b4 Delete type=2 #995
-2023/06/15-13:08:04.932 3314 Level-0 table #1002: started
-2023/06/15-13:08:05.069 3314 Level-0 table #1002: 1128289 bytes OK
-2023/06/15-13:08:05.094 3314 Delete type=0 #994
-2023/06/15-13:08:05.994 27f4 Compacting 1@1 + 5@2 files
-2023/06/15-13:08:06.254 27f4 Generated table #1003@1: 39030 keys, 2210080 bytes
-2023/06/15-13:08:06.454 27f4 Generated table #1004@1: 3868 keys, 2163948 bytes
-2023/06/15-13:08:06.653 27f4 Generated table #1005@1: 36537 keys, 2249058 bytes
-2023/06/15-13:08:06.850 27f4 Generated table #1006@1: 73825 keys, 2217363 bytes
-2023/06/15-13:08:06.940 27f4 Generated table #1007@1: 30074 keys, 622761 bytes
-2023/06/15-13:08:06.940 27f4 Compacted 1@1 + 5@2 files => 9463210 bytes
-2023/06/15-13:08:06.981 27f4 compacted to: files[ 0 0 5 0 0 0 0 ]
-2023/06/15-13:08:06.982 27f4 Delete type=2 #996
-2023/06/15-13:08:06.982 27f4 Delete type=2 #997
-2023/06/15-13:08:06.982 27f4 Delete type=2 #998
-2023/06/15-13:08:06.982 27f4 Delete type=2 #999
-2023/06/15-13:08:06.982 27f4 Delete type=2 #1000
-2023/06/15-13:08:06.982 27f4 Delete type=2 #1002
+2023/06/15-15:32:43.303 7bc Reusing MANIFEST C:\Users\Judite\Documents\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/15-15:32:43.303 7bc Recovering log #151
+2023/06/15-15:32:43.433 7bc Reusing old log C:\Users\Judite\Documents\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000151.log 
+2023/06/15-15:33:02.125 42ec Level-0 table #160: started
+2023/06/15-15:33:02.165 42ec Level-0 table #160: 1087367 bytes OK
+2023/06/15-15:33:02.168 42ec Delete type=0 #151
+2023/06/15-15:33:02.240 28a0 Compacting 1@1 + 5@2 files
+2023/06/15-15:33:02.351 28a0 Generated table #161@1: 40740 keys, 2223036 bytes
+2023/06/15-15:33:02.403 28a0 Generated table #162@1: 4118 keys, 2160156 bytes
+2023/06/15-15:33:02.483 28a0 Generated table #163@1: 26845 keys, 2221015 bytes
+2023/06/15-15:33:02.600 28a0 Generated table #164@1: 79598 keys, 2225378 bytes
+2023/06/15-15:33:02.644 28a0 Generated table #165@1: 31041 keys, 675941 bytes
+2023/06/15-15:33:02.644 28a0 Compacted 1@1 + 5@2 files => 9505526 bytes
+2023/06/15-15:33:02.645 28a0 compacted to: files[ 0 0 5 0 0 0 0 ]
+2023/06/15-15:33:02.645 28a0 Delete type=2 #153
+2023/06/15-15:33:02.645 28a0 Delete type=2 #154
+2023/06/15-15:33:02.645 28a0 Delete type=2 #155
+2023/06/15-15:33:02.645 28a0 Delete type=2 #156
+2023/06/15-15:33:02.645 28a0 Delete type=2 #157
+2023/06/15-15:33:02.646 28a0 Delete type=2 #160
