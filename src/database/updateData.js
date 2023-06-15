@@ -6,11 +6,10 @@ const updateClient = () => {};
 const updateBarber = () => {};
 const updateGoogleSchedule = () => {};
 
-const updateSchedule = async (user, field) => {
+const updateSchedule = async (user, field, eventsArr) => {
   const barbers = await getData("barbeiros");
   const services = await getData("servicos");
   const schedule = await getSchedule(user);
-  console.log("barbers está vindo assim: ", barbers);
   const documentRef = doc(db, "agendamentos", schedule.id);
 
   // Verifique se field é igual a "barber" antes de atualizar o documento
@@ -42,6 +41,46 @@ const updateSchedule = async (user, field) => {
 
       await updateDoc(documentRef, {
         service: { id: selectedService.id, data: selectedService.data },
+      })
+        .then(() => {
+          console.log("Documento atualizado com sucesso!");
+        })
+        .catch((error) => {
+          console.error("Erro ao atualizar o documento:", error);
+        });
+    } else {
+      console.error("Índice do barbeiro inválido!");
+    }
+  }
+
+  if (field === "dayOfWeek") {
+    // Verifique se user.keyword é um valor válido antes de acessar barbers
+    if (user.keyword >= 1 && user.keyword <= eventsArr.length) {
+      // Atualize o documento com o barbeiro correto
+      const selectedDate = eventsArr[user.keyword - 1];
+
+      await updateDoc(documentRef, {
+        date: { dayOfWeek: selectedDay },
+      })
+        .then(() => {
+          console.log("Documento atualizado com sucesso!");
+        })
+        .catch((error) => {
+          console.error("Erro ao atualizar o documento:", error);
+        });
+    } else {
+      console.error("Índice do barbeiro inválido!");
+    }
+  }
+
+  if (field === "date") {
+    // Verifique se user.keyword é um valor válido antes de acessar barbers
+    if (user.keyword >= 1 && user.keyword <= eventsArr.length) {
+      // Atualize o documento com o barbeiro correto
+      const selectedDate = eventsArr[user.keyword - 1];
+
+      await updateDoc(documentRef, {
+        date: { id: selectedDate.id, data: selectedDate.date },
       })
         .then(() => {
           console.log("Documento atualizado com sucesso!");

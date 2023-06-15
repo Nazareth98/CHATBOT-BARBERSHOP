@@ -1,3 +1,31 @@
-2023/06/13-13:29:04.394 b5c Reusing MANIFEST D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
-2023/06/13-13:29:04.395 b5c Recovering log #179
-2023/06/13-13:29:04.562 b5c Reusing old log D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000179.log 
+2023/06/14-17:59:32.941 202c Reusing MANIFEST D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2023/06/14-17:59:32.942 202c Recovering log #567
+2023/06/14-17:59:33.234 202c Reusing old log D:\Repositorio Local\CHATBOT-BARBERSHOP\.wwebjs_auth\session-bot-Barber\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000567.log 
+2023/06/14-17:59:33.235 202c Delete type=2 #560
+2023/06/14-17:59:33.235 202c Delete type=2 #561
+2023/06/14-17:59:33.235 202c Delete type=2 #562
+2023/06/14-17:59:33.235 202c Delete type=2 #563
+2023/06/14-17:59:33.235 202c Delete type=2 #564
+2023/06/14-17:59:33.235 202c Delete type=2 #565
+2023/06/14-17:59:33.235 202c Delete type=2 #568
+2023/06/14-17:59:55.712 a3c Level-0 table #578: started
+2023/06/14-17:59:55.895 a3c Level-0 table #578: 1141356 bytes OK
+2023/06/14-17:59:55.923 a3c Delete type=0 #567
+2023/06/14-17:59:56.031 a3c Compacting 1@1 + 7@2 files
+2023/06/14-17:59:56.338 a3c Generated table #579@1: 58871 keys, 2232254 bytes
+2023/06/14-17:59:56.513 a3c Generated table #580@1: 3547 keys, 2162442 bytes
+2023/06/14-17:59:56.715 a3c Generated table #581@1: 19493 keys, 2217652 bytes
+2023/06/14-17:59:56.930 a3c Generated table #582@1: 23742 keys, 2175054 bytes
+2023/06/14-17:59:57.213 a3c Generated table #583@1: 90664 keys, 2236161 bytes
+2023/06/14-17:59:57.588 a3c Generated table #584@1: 107569 keys, 2257803 bytes
+2023/06/14-17:59:57.679 a3c Generated table #585@1: 21108 keys, 440321 bytes
+2023/06/14-17:59:57.679 a3c Compacted 1@1 + 7@2 files => 13721687 bytes
+2023/06/14-17:59:57.695 a3c compacted to: files[ 0 0 7 0 0 0 0 ]
+2023/06/14-17:59:57.695 a3c Delete type=2 #569
+2023/06/14-17:59:57.695 a3c Delete type=2 #570
+2023/06/14-17:59:57.695 a3c Delete type=2 #571
+2023/06/14-17:59:57.695 a3c Delete type=2 #572
+2023/06/14-17:59:57.695 a3c Delete type=2 #573
+2023/06/14-17:59:57.695 a3c Delete type=2 #574
+2023/06/14-17:59:57.695 a3c Delete type=2 #575
+2023/06/14-17:59:57.695 a3c Delete type=2 #578

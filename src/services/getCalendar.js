@@ -101,7 +101,7 @@ async function listEvents(auth) {
   const res = await calendar.events.list({
     calendarId: "primary",
     timeMin: new Date().toISOString(),
-    maxResults: 10,
+    maxResults: 20,
     singleEvents: true,
     orderBy: "startTime",
   });

@@ -31,7 +31,7 @@ const createSchedule = async (user, schedule) => {
         client: client,
         service: null,
         barber: null,
-        lastService: null,
+        date: null,
       });
     }
   }

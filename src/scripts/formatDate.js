@@ -1,18 +1,18 @@
 const formatDayOfWeek = (day) => {
   switch (day) {
-    case "Sun":
+    case "0":
       return "Domingo";
-    case "Mon":
+    case "1":
       return "Segunda-feira";
-    case "Tue":
+    case "2":
       return "Terça-feira";
-    case "Wed":
+    case "3":
       return "Quarta-feira";
-    case "Thu":
+    case "4":
       return "Quinta-feira";
-    case "Fri":
+    case "5":
       return "Sexta-feira";
-    case "Sat":
+    case "6":
       return "Sábado";
     default:
       return "";
