@@ -200,15 +200,13 @@ client.on("message", async (msg) => {
     phoneNumber: formatToNumber(msg.from),
   };
 
-  if (message.timestamp > dataValidacao) {
-    if (msg.from.includes("@g.us")) {
-      return false;
-    } else {
-      const messageReply = await getReply(user, eventsArr, client);
-      console.log(messageReply);
-      if (messageReply) {
-        client.sendMessage(msg.from, messageReply);
-      }
+  if (msg.from.includes("@g.us")) {
+    return false;
+  } else {
+    const messageReply = await getReply(user, eventsArr, client);
+    console.log(messageReply);
+    if (messageReply) {
+      client.sendMessage(msg.from, messageReply);
     }
   }
 });

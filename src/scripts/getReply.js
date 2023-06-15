@@ -6,10 +6,7 @@ const { createSchedule } = require("../database/createData");
 const { updateSchedule } = require("../database/updateData");
 const { confirmSchedule } = require("./confirmSchedule");
 const { formatDayOfWeek } = require("./formatDate");
-<<<<<<< Updated upstream
-=======
-const { formatHour } = require("./formatHour")
->>>>>>> Stashed changes
+const { formatHour } = require("./formatHour");
 const moment = require("moment");
 const { getNextDays } = require("./getNextDays");
 const { deleteSchedule } = require("../database/deleteData");
@@ -65,11 +62,7 @@ const getReply = async (user, eventsArr) => {
           eventsArr[i].summary === "Livre" &&
           eventsArr[i].date.slice(8, 10) === selectedDay
         ) {
-<<<<<<< Updated upstream
-          reply += `\n*[${i + 1}]* - ${eventsArr[i].date}`;
-=======
           reply += `\n*[${i + 1}]* - ${formatHour(eventsArr[i].date)}`;
->>>>>>> Stashed changes
         }
       }
       reply += "\n\n*[0]* - Cancelar agendamento";
