@@ -81,7 +81,7 @@ const getReply = async (user, eventsArr) => {
       deleteSchedule(user);
       confirmSchedule(schedule);
       reply = `Tudo certo, só comparecer na data escolhida!`;
-    }
+    };
   } else {
     createSchedule(user, schedule);
     reply = `Olá ${user.name}! Tudo certo?\nPara agendar atendimento, escolha primeiro um de nossos barbeiros!\n\n`;
