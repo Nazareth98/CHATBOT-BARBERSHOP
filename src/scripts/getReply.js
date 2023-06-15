@@ -10,6 +10,7 @@ const { formatHour } = require("./formatHour");
 const moment = require("moment");
 const { getNextDays } = require("./getNextDays");
 const { deleteSchedule } = require("../database/deleteData");
+const { formatDayHour } = require("./formatDayHour");
 
 const getReply = async (user, eventsArr) => {
   const services = await getData("servicos");
@@ -70,7 +71,13 @@ const getReply = async (user, eventsArr) => {
     } else if (schedule.data.date.hasOwnProperty("dayOfWeek")) {
       await updateSchedule(user, "date", eventsArr);
       schedule = await getSchedule(user);
-      reply = `Para confirmar o agendamento de *${schedule.data.service.data.name}* com o barbeiro *${schedule.data.barber.data.name}* para a data *${schedule.data.date.data}* responda com a opção *[1]*!\n\n*[1]* - Confirmar agendamento\n\n*[0]* - Cancelar agendamento`;
+      reply = `Para confirmar o agendamento de *${
+        schedule.data.service.data.name
+      }* com o barbeiro *${
+        schedule.data.barber.data.name
+      }* para a data *${formatDayHour(
+        schedule.data.date.data
+      )}* responda com a opção *[1]*!\n\n*[1]* - Confirmar agendamento\n\n*[0]* - Cancelar agendamento`;
       return reply;
     } else if (
       schedule.data.date !== null &&
@@ -81,7 +88,8 @@ const getReply = async (user, eventsArr) => {
       deleteSchedule(user);
       confirmSchedule(schedule);
       reply = `Tudo certo, só comparecer na data escolhida!`;
-    };
+      return reply;
+    }
   } else {
     createSchedule(user, schedule);
     reply = `Olá ${user.name}! Tudo certo?\nPara agendar atendimento, escolha primeiro um de nossos barbeiros!\n\n`;
