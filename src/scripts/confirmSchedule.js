@@ -1,6 +1,10 @@
 const confirmSchedule = async (schedule) => {
-  eventId = schedule.data.date.id;
-  await fetch(`http://localhost:8080/update?eventId=${eventId}`)
+  let eventId = schedule.data.date.id;
+  let calendarId = schedule.data.barber.data.calendarId;
+
+  await fetch(
+    `http://localhost:8080/update?eventId=${eventId}&calendarId=${calendarId}`
+  )
     .then((response) => response.json())
     .then((data) => console.log(data))
     .catch((error) => {

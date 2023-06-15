@@ -14,9 +14,6 @@ const axios = require("axios");
 const idClient = "bot-Barber";
 const port = 8080;
 
-let eventsArr = [];
-let dataValidacao;
-
 const credentials = {
   client_id:
     "724978031851-8n66qukpvbciqggvg83renjrr5n3ml05.apps.googleusercontent.com",
@@ -62,23 +59,6 @@ app.get("/callback", async (req, res) => {
     console.error("Erro ao obter token de acesso:", error);
   }
 
-  await fetch("http://localhost:8080/events")
-    .then((response) => response.json())
-    .then((data) => {
-      for (let i = 0; i < data.length; i++) {
-        eventsArr.push({
-          index: i,
-          id: data[i].id,
-          date: data[i].start.dateTime,
-          summary: data[i].summary,
-        });
-      }
-      console.log(eventsArr);
-    })
-    .catch((error) => {
-      console.error("Erro ao buscar os eventos:", error);
-    });
-
   res.send("Autorização concluída. Você pode fechar esta página.");
 });
 
@@ -87,7 +67,7 @@ app.get("/events", async (req, res) => {
   try {
     // Criação do cliente do Google Calendar
     const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
-
+    const calendarId = req.query.calendarId;
     // Data mínima para consulta (a partir de hoje)
     const minDate = new Date();
 
@@ -100,7 +80,7 @@ app.get("/events", async (req, res) => {
     console.log("maxdate: " + maxDate);
     // Consulta dos eventos no Google Calendar
     const response = await calendar.events.list({
-      calendarId: "primary",
+      calendarId: calendarId,
       timeMin: minDate.toISOString(),
       timeMax: maxDate.toISOString(),
     });
@@ -118,10 +98,12 @@ app.get("/update", async (req, res) => {
   try {
     const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
     const eventId = req.query.eventId; // ID do evento a ser atualizado
+    const calendarId = req.query.calendarId; // ID do evento a ser atualizado
+    // ID do evento a ser atualizado
 
     // Obtenha o evento atual para manter o horário de término
     const response = await calendar.events.get({
-      calendarId: "barbeariafelipe88@gmail.com",
+      calendarId: calendarId,
       eventId: eventId,
     });
     const existingEvent = response.data;
@@ -135,7 +117,7 @@ app.get("/update", async (req, res) => {
     };
 
     const responseUpdate = await calendar.events.update({
-      calendarId: "barbeariafelipe88@gmail.com",
+      calendarId: calendarId,
       eventId: eventId,
       resource: updatedEvent,
     });
@@ -203,7 +185,7 @@ client.on("message", async (msg) => {
   if (msg.from.includes("@g.us")) {
     return false;
   } else {
-    const messageReply = await getReply(user, eventsArr, client);
+    const messageReply = await getReply(user);
     console.log(messageReply);
     if (messageReply) {
       client.sendMessage(msg.from, messageReply);

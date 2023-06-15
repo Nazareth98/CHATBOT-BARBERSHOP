@@ -11,8 +11,11 @@ const moment = require("moment");
 const { getNextDays } = require("./getNextDays");
 const { deleteSchedule } = require("../database/deleteData");
 const { formatDayHour } = require("./formatDayHour");
+const { getEvents } = require("./getEvents");
 
-const getReply = async (user, eventsArr) => {
+let eventsArr = [];
+
+const getReply = async (user) => {
   const services = await getData("servicos");
   const barbers = await getData("barbeiros");
   let schedule = await getSchedule(user);
@@ -42,7 +45,6 @@ const getReply = async (user, eventsArr) => {
     } else if (schedule.data.service === null) {
       await updateSchedule(user, "service");
       schedule = await getSchedule(user);
-
       reply = `Selecione o dia de prefrência:\n\n`;
       nextDays = getNextDays();
 
@@ -54,8 +56,10 @@ const getReply = async (user, eventsArr) => {
       reply += "\n\n*[0]* - Cancelar agendamento";
       return reply;
     } else if (schedule.data.date === null) {
-      await updateSchedule(user, "dayOfWeek", eventsArr);
+      await updateSchedule(user, "dayOfWeek");
       schedule = await getSchedule(user);
+      eventsArr = await getEvents(schedule);
+      console.log("eventsArr: ", eventsArr);
       let selectedDay = schedule.data.date.dayOfWeek.dayOfMonth.toString();
       reply = `${user.name}, escolha um dos próximos horários disponíves:\n\n`;
       for (let i = 0; i < eventsArr.length; i++) {
@@ -69,6 +73,7 @@ const getReply = async (user, eventsArr) => {
       reply += "\n\n*[0]* - Cancelar agendamento";
       return reply;
     } else if (schedule.data.date.hasOwnProperty("dayOfWeek")) {
+      eventsArr = await getEvents(schedule);
       await updateSchedule(user, "date", eventsArr);
       schedule = await getSchedule(user);
       reply = `Para confirmar o agendamento de *${
