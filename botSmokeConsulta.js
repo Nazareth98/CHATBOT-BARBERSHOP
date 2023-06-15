@@ -61,6 +61,23 @@ app.get("/callback", async (req, res) => {
     console.error("Erro ao obter token de acesso:", error);
   }
 
+  await fetch("http://localhost:8080/events")
+    .then((response) => response.json())
+    .then((data) => {
+      for (let i = 0; i < data.length; i++) {
+        eventsArr.push({
+          index: i,
+          id: data[i].id,
+          date: data[i].start.dateTime,
+          summary: data[i].summary,
+        });
+      }
+      console.log(eventsArr);
+    })
+    .catch((error) => {
+      console.error("Erro ao buscar os eventos:", error);
+    });
+
   res.send("Autorização concluída. Você pode fechar esta página.");
 });
 
@@ -76,7 +93,7 @@ app.get("/events", async (req, res) => {
     // Data máxima para consulta (5 dias no futuro)
     const maxDate = new Date();
 
-    maxDate.setDate(maxDate.getDate() + 2); // Adiciona 10 dias para incluir os próximos 5 dias
+    maxDate.setDate(maxDate.getDate() + 6); // Adiciona 10 dias para incluir os próximos 5 dias
     maxDate.setHours(23, 59, 59); // Define o horário para o final do dia
 
     console.log("maxdate: " + maxDate);

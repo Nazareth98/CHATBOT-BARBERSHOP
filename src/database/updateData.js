@@ -1,6 +1,7 @@
 const { db } = require("../firebase/index");
 const { updateDoc, doc } = require("firebase/firestore/lite");
 const { getClient, getService, getData, getSchedule } = require("./getData");
+const { getNextDays } = require("../scripts/getNextDays");
 
 const updateClient = () => {};
 const updateBarber = () => {};
@@ -11,6 +12,7 @@ const updateSchedule = async (user, field, eventsArr) => {
   const services = await getData("servicos");
   const schedule = await getSchedule(user);
   const documentRef = doc(db, "agendamentos", schedule.id);
+  const nextDays = getNextDays();
 
   // Verifique se field é igual a "barber" antes de atualizar o documento
   if (field === "barber") {
@@ -55,12 +57,12 @@ const updateSchedule = async (user, field, eventsArr) => {
 
   if (field === "dayOfWeek") {
     // Verifique se user.keyword é um valor válido antes de acessar barbers
-    if (user.keyword >= 1 && user.keyword <= eventsArr.length) {
+    if (user.keyword >= 1 && user.keyword <= nextDays.length) {
       // Atualize o documento com o barbeiro correto
-      const selectedDate = eventsArr[user.keyword - 1];
+      const selectedDate = nextDays[user.keyword - 1];
 
       await updateDoc(documentRef, {
-        date: { dayOfWeek: selectedDay },
+        date: { dayOfWeek: selectedDate },
       })
         .then(() => {
           console.log("Documento atualizado com sucesso!");

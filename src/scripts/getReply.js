@@ -7,6 +7,7 @@ const { updateSchedule } = require("../database/updateData");
 const { confirmSchedule } = require("./confirmSchedule");
 const { formatDayOfWeek } = require("./formatDate");
 const moment = require("moment");
+const { getNextDays } = require("./getNextDays");
 
 const getReply = async (user, eventsArr) => {
   const services = await getData("servicos");
@@ -39,29 +40,7 @@ const getReply = async (user, eventsArr) => {
       schedule = await getSchedule(user);
 
       reply = `Selecione o dia de prefrência:\n\n`;
-      nextDays = [];
-      for (let i = 0; i < 7; i++) {
-        let Day = new Date();
-        let data = moment(Day);
-        let j = i;
-        let formatedDate = data.format("YYYY-MM-DDTHH:mm:ssZ");
-
-        console.log("como esta retornando formatedDate:" + formatedDate);
-        if (Day.getDay() + i > 6) {
-          j = i - 7;
-        }
-
-        console.log("esse é o valor de j: ", j);
-        let dayOfMonth = Day.getDate() + i;
-        let dayOfWeek = Day.getDay() + j;
-        if (dayOfWeek !== 0) {
-          nextDays.push({
-            Date: formatedDate,
-            dayOfWeek: formatDayOfWeek(dayOfWeek.toString()),
-            dayOfMonth: dayOfMonth,
-          });
-        }
-      }
+      nextDays = getNextDays();
 
       for (let i = 0; i < nextDays.length; i++) {
         reply += `\n*[${i + 1}]* - ${nextDays[i].dayOfWeek}, dia ${
@@ -70,21 +49,30 @@ const getReply = async (user, eventsArr) => {
       }
       reply += "\n\n*[0]* - Cancelar agendamento";
       return reply;
-    } else if (schedule.data.service !== null) {
-      await updateSchedule(user, "dayOfWeek");
+    } else if (schedule.data.date === null) {
+      await updateSchedule(user, "dayOfWeek", eventsArr);
+      schedule = await getSchedule(user);
+      console.log("data sem slice: ", eventsArr[62].date.slice(8, 10));
+      console.log(
+        "data de selectedDay: ",
+        schedule.data.date.dayOfWeek.dayOfMonth.toString()
+      );
+      let selectedDay = schedule.data.date.dayOfWeek.dayOfMonth.toString();
       reply = `${user.name}, escolha um dos próximos horários disponíves:\n\n`;
       for (let i = 0; i < eventsArr.length; i++) {
-        if (eventsArr[i].summary === "Livre") {
+        if (
+          eventsArr[i].summary === "Livre" &&
+          eventsArr[i].date.slice(8, 10) === selectedDay
+        ) {
           reply += `\n*[${i + 1}]* - ${eventsArr[i].date}`;
         }
       }
       reply += "\n\n*[0]* - Cancelar agendamento";
       return reply;
-    } else if (schedule.data.date === null) {
+    } else if (schedule.data.date.hasOwnProperty("dayOfWeek")) {
       await updateSchedule(user, "date", eventsArr);
       schedule = await getSchedule(user);
-      reply = `Para confirmar o agendamento de *${schedule.data.service.data.name}* com o barbeiro *${schedule.data.barber.data.name}* para a data *${schedule.data.date.data}* responda com a opção *[1]*!\n\n*[1]* - Confirmar agendamento`;
-      reply += "\n\n*[0]* - Cancelar agendamento";
+      reply = `Para confirmar o agendamento de *${schedule.data.service.data.name}* com o barbeiro *${schedule.data.barber.data.name}* para a data *${schedule.data.date.data}* responda com a opção *[1]*!\n\n*[1]* - Confirmar agendamento\n\n*[0]* - Cancelar agendamento`;
       return reply;
     } else if (
       schedule.data.date !== null &&
@@ -93,6 +81,7 @@ const getReply = async (user, eventsArr) => {
     ) {
       schedule = await getSchedule(user);
       confirmSchedule(schedule);
+      reply = `Tudo certo, só comparecer na data escolhida!`;
     }
   } else {
     createSchedule(user, schedule);
