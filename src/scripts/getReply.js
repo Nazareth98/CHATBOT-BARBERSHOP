@@ -31,12 +31,12 @@ const getReply = async (user) => {
     await deleteSchedule(user);
     return cancelSchedule(user);
   }
-
+  console.log("como schedule ta vindo antes do if:", schedule)
   if (schedule !== null) {
     if (schedule.data.barber === null) {
       await updateSchedule(user, "barber");
       schedule = await getSchedule(user);
-      reply = `${user.name}, para realizar o agendamento com o barbeiro *${schedule.data.barber.data.name}* selecione uma das seguintes opções:\n\n`;
+      reply = `${user.name}, para realizar o agendamento com o barbeiro ${schedule.data.barber.data.name} selecione uma das seguintes opções:\n\n`;
       for (let i = 0; i < services.length; i++) {
         reply += `\n*[${i + 1}]* - ${services[i].data.name}`;
       }
@@ -82,7 +82,7 @@ const getReply = async (user) => {
         schedule.data.barber.data.name
       }* para a data *${formatDayHour(
         schedule.data.date.data
-      )}* responda com a opção *[1]*!\n\n*[1]* - Confirmar agendamento\n\n*[0]* - Cancelar agendamento`;
+      )}* responda com a opção [1]!\n\n*[1]* - Confirmar agendamento\n\n*[0]* - Cancelar agendamento`;
       return reply;
     } else if (
       schedule.data.date !== null &&
