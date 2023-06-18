@@ -99,11 +99,9 @@ const getReply = async (user) => {
       reply = `${user.name}, escolha um dos próximos horários disponíves:\n\n`;
       let eventsToday = getEventsToday(eventsArr, selectedDay);
 
-      console.log("eventsToday: ", eventsToday);
-
       if (eventsToday.length > 0) {
         for (let i = 0; i < eventsToday.length; i++) {
-          reply += `\n🕐 - *[${i + 1}]* ${formatHour(eventsArr[i].date)}`;
+          reply += `\n🕐 - *[${i + 1}]* ${formatHour(eventsToday[i].date)}`;
         }
         reply += "\n\n*🚫 - [0]* Cancelar agendamento";
         return reply;

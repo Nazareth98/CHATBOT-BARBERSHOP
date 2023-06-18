@@ -2,6 +2,7 @@ const { db } = require("../firebase/index");
 const { updateDoc, doc } = require("firebase/firestore/lite");
 const { getClient, getService, getData, getSchedule } = require("./getData");
 const { getNextDays } = require("../scripts/getNextDays");
+const { getEventsToday } = require("../scripts/getEventsToday");
 
 const updateClient = () => {};
 const updateBarber = () => {};
@@ -65,13 +66,13 @@ const updateSchedule = async (user, field, eventsArr) => {
         date: { dayOfWeek: selectedDate },
       })
         .then(() => {
-          console.log("Documento atualizado com sucesso!");
+          console.log("dayOfWeek atualizado com sucesso!");
         })
         .catch((error) => {
           console.error("Erro ao atualizar o documento:", error);
         });
     } else {
-      console.error("Índice do barbeiro inválido!");
+      console.error("Dia da semana inválido!");
     }
   }
 
@@ -93,11 +94,13 @@ const updateSchedule = async (user, field, eventsArr) => {
   }
 
   if (field === "date") {
+    let selectedDay = schedule.data.date.dayOfWeek.dayOfMonth.toString();
+    let eventsToday = getEventsToday(eventsArr, selectedDay);
     // Verifique se user.keyword é um valor válido antes de acessar barbers
-    if (user.keyword >= 1 && user.keyword <= eventsArr.length) {
+    if (user.keyword >= 1 && user.keyword <= eventsToday.length) {
       // Atualize o documento com o barbeiro correto
-      const selectedDate = eventsArr[user.keyword - 1];
-
+      const selectedDate = eventsToday[user.keyword - 1];
+      console.log("selected date: ", selectedDate);
       await updateDoc(documentRef, {
         date: { id: selectedDate.id, data: selectedDate.date },
       })

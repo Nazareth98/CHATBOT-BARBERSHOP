@@ -94,11 +94,12 @@ app.get("/events", async (req, res) => {
   }
 });
 
-app.get("/update", async (req, res) => {
+app.get("/confirm", async (req, res) => {
   try {
     const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
     const eventId = req.query.eventId; // ID do evento a ser atualizado
-    const calendarId = req.query.calendarId; // ID do evento a ser atualizado
+    const calendarId = req.query.calendarId;
+    const description = req.query.description; // ID do evento a ser atualizado
     // ID do evento a ser atualizado
 
     // Obtenha o evento atual para manter o horário de término
@@ -111,7 +112,7 @@ app.get("/update", async (req, res) => {
     const updatedEvent = {
       ...existingEvent,
       summary: "Horário marcado", // Novo título do evento
-      description: "Corte alterado",
+      description: description,
       colorId: "5",
       // Outras propriedades do evento que você deseja atualizar
     };
@@ -186,7 +187,7 @@ client.on("message", async (msg) => {
     return false;
   } else {
     const messageReply = await getReply(user);
-    console.log(messageReply);
+    messageReply;
     if (messageReply) {
       client.sendMessage(msg.from, messageReply);
     }

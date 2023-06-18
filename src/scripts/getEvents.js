@@ -11,6 +11,7 @@ const getEvents = async (schedule) => {
           id: data[i].id,
           date: data[i].start.dateTime,
           summary: data[i].summary,
+          description: data[i].description,
         });
       }
     })
