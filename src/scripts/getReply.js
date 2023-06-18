@@ -10,6 +10,7 @@ const { deleteSchedule } = require("../database/deleteData");
 const { formatDayHour } = require("./formatDayHour");
 const { getEvents } = require("./getEvents");
 const { getEventsToday } = require("./getEventsToday");
+const { hasEvent } = require("./hasEvent");
 
 let eventsArr = [];
 
@@ -17,6 +18,7 @@ const getReply = async (user) => {
   const services = await getData("servicos");
   const barbers = await getData("barbeiros");
   let schedule = await getSchedule(user);
+  let teste = await hasEvent(user);
   await isRegistered(user);
 
   console.log("mensagem recebida:", user.keyword);
@@ -27,6 +29,13 @@ const getReply = async (user) => {
   if (user.keyword === "0") {
     await deleteSchedule(user);
     return cancelSchedule(user);
+  }
+
+  // Se já possuir evento agendado nos próximos dias
+  if (teste.hasEvent) {
+    let event = teste.event;
+    console.log("o QUE VEM NESSE EVENTO?", event);
+    return false;
   }
 
   // Se ainda não existir um "agendamento", cria-se um e solicita a seleção de um "barbeiro"
