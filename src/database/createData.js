@@ -19,21 +19,17 @@ const createClient = async ({ name, phoneNumber, chatId }) => {
   }
 };
 
-const createSchedule = async (user, schedule) => {
-  if (schedule !== null) {
+const createSchedule = async (user) => {
+  if (user.phoneNumber.includes("status")) {
     return null;
   } else {
-    if (user.phoneNumber.includes("status")) {
-      return null;
-    } else {
-      const client = await getClient(user);
-      await setDoc(doc(db, "agendamentos", uuidv4()), {
-        client: client,
-        service: null,
-        barber: null,
-        date: null,
-      });
-    }
+    const client = await getClient(user);
+    await setDoc(doc(db, "agendamentos", uuidv4()), {
+      client: client,
+      service: null,
+      barber: null,
+      date: null,
+    });
   }
 };
 

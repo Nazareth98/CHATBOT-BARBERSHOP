@@ -1,22 +1,20 @@
 const { deleteSchedule } = require("../database/deleteData");
-const { getData } = require("../database/getData");
+const { getData, getSchedule } = require("../database/getData");
 const { db } = require("../firebase/index");
 const { doc, deleteDoc } = require("firebase/firestore/lite");
 
 const cancelSchedule = async (user) => {
-  const schedules = await getData("agendamentos");
+  const schedule = await getSchedule(user);
 
-  for (item of schedules) {
-    if (item.data.client.phoneNumber === user.phoneNumber) {
-      const documentRef = doc(db, "agendamentos", item.id);
-      deleteDoc(documentRef)
-        .then(() => {
-          console.log("Documento excluído com sucesso!");
-        })
-        .catch((error) => {
-          console.error("Erro ao excluir o documento:", error);
-        });
-    }
+  if (schedule !== null) {
+    const documentRef = doc(db, "agendamentos", schedule.id);
+    deleteDoc(documentRef)
+      .then(() => {
+        console.log("Documento excluído com sucesso!");
+      })
+      .catch((error) => {
+        console.error("Erro ao excluir o documento:", error);
+      });
   }
 
   reply = `Agendamento cancelado com sucesso, até breve!`;

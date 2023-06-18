@@ -51,7 +51,7 @@ const updateSchedule = async (user, field, eventsArr) => {
           console.error("Erro ao atualizar o documento:", error);
         });
     } else {
-      console.error("Índice do barbeiro inválido!");
+      console.error("Índice do serviço inválido!");
     }
   }
 
@@ -75,6 +75,23 @@ const updateSchedule = async (user, field, eventsArr) => {
     }
   }
 
+  if (field === "dayReset") {
+    // Verifique se user.keyword é um valor válido antes de acessar barbers
+    if (user.keyword >= 1 && user.keyword <= nextDays.length) {
+      await updateDoc(documentRef, {
+        date: null,
+      })
+        .then(() => {
+          console.log("Documento atualizado com sucesso!");
+        })
+        .catch((error) => {
+          console.error("Erro ao atualizar o documento:", error);
+        });
+    } else {
+      console.error("Dia selecionado inválido!");
+    }
+  }
+
   if (field === "date") {
     // Verifique se user.keyword é um valor válido antes de acessar barbers
     if (user.keyword >= 1 && user.keyword <= eventsArr.length) {
@@ -91,7 +108,7 @@ const updateSchedule = async (user, field, eventsArr) => {
           console.error("Erro ao atualizar o documento:", error);
         });
     } else {
-      console.error("Índice do barbeiro inválido!");
+      console.error("O horário selecionado é inválido!");
     }
   }
 };
