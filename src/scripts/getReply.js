@@ -34,8 +34,23 @@ const getReply = async (user) => {
   // Se já possuir evento agendado nos próximos dias
   if (teste.hasEvent) {
     let event = teste.event;
+    switch (user.keyword) {
+      case "10":
+        reply = `Ok, a seguir está a data do seu agendamento pendente! Te aguardamos!!!`;
+        return reply;
+      case "20":
+        reply = `Ok, vamos lá!\n`;
+        return reply;
+      case "30":
+        reply = `Pode deixar, ta cancelado!.\nMas que pena 😥, assim que puder, entre em contato com a gente para fazer seu agendamento, até abreve! 👋 `;
+        return reply;
+      case "00":
+        reply = ``;
+        return reply;
+    }
     console.log("o QUE VEM NESSE EVENTO?", event);
-    return false;
+    reply = `Olá ${user.name}, vi aqui que você possui um agendamento pendente para os próximos dias 🤔\nMe diga qual opção melhor te atende nesse momento:\n\n🗓️ - *[10]* Quero confirmar a data do meu agendamento!\n🔄️ - *[20]* Preciso agendar outra data!\n🥲 - *[30]* Não poderei comparecer!\n☎️ - *[00]* Preciso falar com um atendente!`;
+    return reply;
   }
 
   // Se ainda não existir um "agendamento", cria-se um e solicita a seleção de um "barbeiro"
