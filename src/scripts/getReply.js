@@ -45,7 +45,7 @@ const getReply = async (user) => {
     await updateSchedule(user, "barber");
     schedule = await getSchedule(user);
     // Se após a atualização de "agendamento" ainda não exista um "barbeiro" selecionado, solicita a seleção novamente
-    if (schedule.data.barber.hasOwnProperty("data")) {
+    if (schedule.data.barber !== null) {
       reply = `${user.name}, para realizar o agendamento com o barbeiro ${schedule.data.barber.data.name} selecione uma das seguintes opções:\n\n`;
       for (let i = 0; i < services.length; i++) {
         reply += `\n✂️ - *[${i + 1}]* ${services[i].data.name}`;
@@ -53,7 +53,7 @@ const getReply = async (user) => {
       reply += "\n\n*🚫 - [0]* Cancelar agendamento";
       return reply;
     } else {
-      reply = `Olá ${user.name}! Tudo certo?\nPara agendar atendimento, escolha primeiro um de nossos barbeiros!\n\n`;
+      reply = `⚠️ Opção inválida\nEscolha uma opção válida dentre nossos barbeiros!\n\n`;
       for (let i = 0; i < barbers.length; i++) {
         reply += `\n🙎‍♂️ - *[${i + 1}]* ${barbers[i].data.name}`;
       }
@@ -67,7 +67,7 @@ const getReply = async (user) => {
     await updateSchedule(user, "service");
     schedule = await getSchedule(user);
     // Se após a atualização de "agendamento" ainda não exista um "serviço" selecionado, solicita a seleção novamente
-    if (schedule.data.service.hasOwnProperty("data")) {
+    if (schedule.data.service !== null) {
       reply = `Selecione o dia de prefrência:\n\n`;
       nextDays = getNextDays();
       for (let i = 0; i < nextDays.length; i++) {
@@ -78,7 +78,7 @@ const getReply = async (user) => {
       reply += "\n\n🚫 - *[0]* Cancelar agendamento";
       return reply;
     } else {
-      reply = `${user.name}, para realizar o agendamento com o barbeiro ${schedule.data.barber.data.name} selecione uma das seguintes opções:\n\n`;
+      reply = `⚠️ Opção inválida\nEscolha uma opção válida dentre nossos serviços!\n\n`;
       for (let i = 0; i < services.length; i++) {
         reply += `\n✂️ - *[${i + 1}]* ${services[i].data.name}`;
       }
@@ -92,10 +92,10 @@ const getReply = async (user) => {
     await updateSchedule(user, "dayOfWeek");
     schedule = await getSchedule(user);
     eventsArr = await getEvents(schedule);
-    let selectedDay = schedule.data.date.dayOfWeek.dayOfMonth.toString();
 
     // Se o "dia da semana" selecionado possuir horários disponíveis, exibimos opções de horários
-    if (eventsArr !== undefined) {
+    if (schedule.data.date !== null) {
+      let selectedDay = schedule.data.date.dayOfWeek.dayOfMonth.toString();
       reply = `${user.name}, escolha um dos próximos horários disponíves:\n\n`;
       let eventsToday = getEventsToday(eventsArr, selectedDay);
 
@@ -118,6 +118,16 @@ const getReply = async (user) => {
         return reply;
       }
       // Se "dia da semana" não possuir horários disponíveis, removemos a opção escolhida de "agendamentos" e solicitamos uma nova seleção
+    } else {
+      reply = `⚠️ Opção inválida\nEscolha uma opção válida dentre nossos dias disponíveis!\n\n`;
+      nextDays = getNextDays();
+      for (let i = 0; i < nextDays.length; i++) {
+        reply += `\n🗓️ - *[${i + 1}]* ${nextDays[i].dayOfWeek}, dia ${
+          nextDays[i].dayOfMonth
+        }`;
+      }
+      reply += "\n\n*🚫 - [0]* Cancelar agendamento";
+      return reply;
     }
   }
 
