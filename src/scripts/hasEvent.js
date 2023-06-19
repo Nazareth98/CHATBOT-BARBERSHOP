@@ -1,9 +1,11 @@
+const { calendar } = require("googleapis/build/src/apis/calendar");
 const { getData } = require("../database/getData");
 
 const hasEvent = async (user) => {
   const barbers = await getData("barbeiros");
   let hasEvent = false;
   let event;
+  let chatId;
   for (let i = 0; i < barbers.length; i++) {
     let eventsArray = [];
     await fetch(
@@ -28,6 +30,7 @@ const hasEvent = async (user) => {
       if (eventsArray[k].description.includes(user.phoneNumber)) {
         hasEvent = true;
         event = eventsArray[k];
+        chatId = barbers[i].data.chatId;
         break;
       }
     }
@@ -35,8 +38,7 @@ const hasEvent = async (user) => {
       break;
     }
   }
-  console.log(hasEvent, event);
-  return { hasEvent, event };
+  return { hasEvent, event, chatId };
 };
 
 module.exports = {

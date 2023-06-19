@@ -186,7 +186,7 @@ client.on("message", async (msg) => {
   if (msg.from.includes("@g.us")) {
     return false;
   } else {
-    const messageReply = await getReply(user);
+    const messageReply = await getReply(user, client);
     messageReply;
     if (messageReply) {
       client.sendMessage(msg.from, messageReply);
