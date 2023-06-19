@@ -8,6 +8,11 @@ const getEventsToday = (eventsArr, selectedDay) => {
       eventsToday.push(eventsArr[i]);
     }
   }
+  eventsToday.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateA - dateB;
+  });
   return eventsToday;
 };
 

@@ -14,13 +14,13 @@ const hasEvent = async (user) => {
       .then((response) => response.json())
       .then((data) => {
         for (let j = 0; j < data.length; j++) {
-          console.log(data[j].description);
           eventsArray.push({
             index: j,
             id: data[j].id,
             date: data[j].start.dateTime,
             summary: data[j].summary,
             description: data[j].description,
+            calendarId: barbers[i].data.calendarId
           });
         }
       })

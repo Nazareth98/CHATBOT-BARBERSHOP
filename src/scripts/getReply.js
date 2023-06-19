@@ -13,7 +13,7 @@ const { formatDayHour } = require("./formatDayHour");
 const { getEvents } = require("./getEvents");
 const { getEventsToday } = require("./getEventsToday");
 const { hasEvent } = require("./hasEvent");
-
+const { deleteEvent } = require("./deleteEvent");
 
 let eventsArr = [];
 
@@ -27,47 +27,53 @@ const getReply = async (user, client) => {
   console.log("mensagem recebida:", user.keyword);
 
   let reply = "";
-  
+
   // Se já possuir evento agendado nos próximos dias
   if (teste.hasEvent) {
     let event = teste.event;
-    let chatId = teste.chatId
+    let chatId = teste.chatId;
     switch (user.keyword) {
       case "10":
         reply = `Ok, a seguir está a data do seu agendamento pendente! Te aguardamos!!!`;
         return reply;
-        case "20":
-          reply = `Ok, vamos lá!\n`;
-          returnCancel(event, chatId, client, user);
-          return reply;
-          case "30":
-            reply = `Pode deixar, ta cancelado!.\nMas que pena 😥, assim que puder, entre em contato com a gente para fazer seu agendamento, até abreve! 👋 `;
-            returnCancel(event, chatId, client, user);
+      case "20":
+        returnCancel(event, chatId, client, user);
+        deleteEvent(event)
+        reply = `Ok, vamos lá!\nPara agendar um atendimento escolha um de nossos barbeiros!\n\n`;
+        for (let i = 0; i < barbers.length; i++) {
+          reply += `\n🙎‍♂️ - *[${i + 1}]* ${barbers[i].data.name}`;
+        }
+        reply += "\n\n*🚫 - [0]* Cancelar agendamento";
         return reply;
-        case "00":
+      case "30":
+        reply = `Pode deixar, ta cancelado!.\nMas que pena 😥, assim que puder, entre em contato com a gente para fazer seu agendamento, até abreve! 👋 `;
+        returnCancel(event, chatId, client, user);
+        deleteEvent(event)
+        return reply;
+      case "00":
         reply = ``;
         return reply;
-      }
-      console.log("o QUE VEM NESSE EVENTO?", event);
-      reply = `Olá ${user.name}, vi aqui que você possui um agendamento pendente para os próximos dias 🤔\nMe diga qual opção melhor te atende nesse momento:\n\n🗓️ - *[10]* Quero confirmar a data do meu agendamento!\n🔄️ - *[20]* Preciso agendar outra data!\n🥲 - *[30]* Não poderei comparecer!\n☎️ - *[00]* Preciso falar com um atendente!`;
-      return reply;
     }
-    
-      // Se a mensagem recebida for "0" cancela o agendamento
-      if (user.keyword === "0") {
-        await deleteSchedule(user);
-        return cancelSchedule(user);
-      }
-    
-    // Se ainda não existir um "agendamento", cria-se um e solicita a seleção de um "barbeiro"
-    if (schedule === null) {
-      createSchedule(user);
-      reply = `Olá ${user.name}! Tudo certo?\nPara agendar um atendimento escolha um de nossos barbeiros!\n\n`;
-      for (let i = 0; i < barbers.length; i++) {
-        reply += `\n🙎‍♂️ - *[${i + 1}]* ${barbers[i].data.name}`;
-      }
-      reply += "\n\n*🚫 - [0]* Cancelar agendamento";
-      return reply;
+    console.log("o QUE VEM NESSE EVENTO?", event);
+    reply = `Olá ${user.name}, vi aqui que você possui um agendamento pendente para os próximos dias 🤔\nMe diga qual opção melhor te atende nesse momento:\n\n🗓️ - *[10]* Quero confirmar a data do meu agendamento!\n🔄️ - *[20]* Preciso agendar outra data!\n🥲 - *[30]* Não poderei comparecer!\n☎️ - *[00]* Preciso falar com um atendente!`;
+    return reply;
+  }
+
+  // Se a mensagem recebida for "0" cancela o agendamento
+  if (user.keyword === "0") {
+    await deleteSchedule(user);
+    return cancelSchedule(user);
+  }
+
+  // Se ainda não existir um "agendamento", cria-se um e solicita a seleção de um "barbeiro"
+  if (schedule === null) {
+    createSchedule(user);
+    reply = `Olá ${user.name}! Tudo certo?\nPara agendar um atendimento escolha um de nossos barbeiros!\n\n`;
+    for (let i = 0; i < barbers.length; i++) {
+      reply += `\n🙎‍♂️ - *[${i + 1}]* ${barbers[i].data.name}`;
+    }
+    reply += "\n\n*🚫 - [0]* Cancelar agendamento";
+    return reply;
   }
 
   // Se existir "agendamento" e ele ainda não possuir "barbeiro", adiciona "barbeiro" selecionado anteriormente
@@ -186,7 +192,7 @@ const getReply = async (user, client) => {
     schedule = await getSchedule(user);
 
     if (user.keyword === "1") {
-      returnConfirm(schedule, client)
+      returnConfirm(schedule, client);
       deleteSchedule(user);
       confirmSchedule(schedule);
       reply = `Tudo certo, só comparecer na data escolhida!`;

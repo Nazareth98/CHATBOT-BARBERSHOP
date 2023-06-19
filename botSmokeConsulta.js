@@ -113,7 +113,47 @@ app.get("/confirm", async (req, res) => {
       ...existingEvent,
       summary: "Horário marcado", // Novo título do evento
       description: description,
-      colorId: "5",
+      colorId: "4",
+      // Outras propriedades do evento que você deseja atualizar
+    };
+
+    const responseUpdate = await calendar.events.update({
+      calendarId: calendarId,
+      eventId: eventId,
+      resource: updatedEvent,
+    });
+
+    res.send({
+      msg: "Evento atualizado com sucesso",
+      updatedEvent: responseUpdate.data,
+    });
+  } catch (error) {
+    console.error("Ocorreu um erro ao atualizar o evento:", error);
+    res.status(500).send("Erro ao atualizar o evento");
+  }
+});
+
+
+app.get("/delete", async (req, res) => {
+  try {
+    const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
+    const eventId = req.query.eventId; // ID do evento a ser atualizado
+    const calendarId = req.query.calendarId;
+    const description = req.query.description; // ID do evento a ser atualizado
+    // ID do evento a ser atualizado
+
+    // Obtenha o evento atual para manter o horário de término
+    const response = await calendar.events.get({
+      calendarId: calendarId,
+      eventId: eventId,
+    });
+    const existingEvent = response.data;
+
+    const updatedEvent = {
+      ...existingEvent,
+      summary: "Livre", // Novo título do evento
+      description: "Livre",
+      colorId: "2",
       // Outras propriedades do evento que você deseja atualizar
     };
 
