@@ -1,5 +1,3 @@
-[0615/160100.711:ERROR:dxva_video_decode_accelerator_win.cc(1426)] DXVAVDA fatal error: Could not load mf.dll: Não foi possível encontrar o módulo especificado. (0x7E)
-[0615/160100.978:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.", source:  (0)
-[0615/160100.978:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.", source:  (0)
-[0615/160113.124:INFO:CONSOLE(43)] "Uncaught (in promise) TypeError: Failed to execute 'put' on 'Cache': Partial response (status code 206) is unsupported", source: https://web.whatsapp.com/serviceworker.js (43)
-[0615/160113.130:INFO:CONSOLE(43)] "Uncaught (in promise) TypeError: Failed to execute 'put' on 'Cache': Partial response (status code 206) is unsupported", source: https://web.whatsapp.com/serviceworker.js (43)
+[0702/152946.286:ERROR:dxva_video_decode_accelerator_win.cc(1426)] DXVAVDA fatal error: Could not load mf.dll: Não foi possível encontrar o módulo especificado. (0x7E)
+[0702/152946.551:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'ambient-light-sensor'.", source:  (0)
+[0702/152946.551:INFO:CONSOLE(0)] "Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.", source:  (0)

@@ -16,8 +16,12 @@ const getEvents = async (schedule) => {
       }
     })
     .catch((error) => console.log("Erro ao buscar os eventos:", error));
+
   return eventsArr;
 };
+
+
+
 
 module.exports = {
   getEvents,

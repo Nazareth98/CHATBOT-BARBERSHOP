@@ -8,7 +8,7 @@ const formatDayHour1 = (str) => {
 const formatDayHour = (str) => {
   const data = new Date(str);
   const diaSemana = {weekday: "long"}
-  const mes = data.getMonth();
+  const mes = data.getMonth() + 1;
   const dia = data.getDate(); // Criar objeto de data a partir do formato ISO 8601
   const hora = data.getHours(); // Obter a hora da data
   const minuto = data.getMinutes(); // Obter o minuto da data

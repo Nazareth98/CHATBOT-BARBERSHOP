@@ -13,8 +13,12 @@ const getEventsToday = (eventsArr, selectedDay) => {
     const dateB = new Date(b.date);
     return dateA - dateB;
   });
+
+
+
   return eventsToday;
 };
+
 
 module.exports = {
   getEventsToday,

@@ -7,6 +7,7 @@ const { confirmSchedule } = require("./confirmSchedule");
 const { formatHour } = require("./formatHour");
 const { returnCancel } = require("./returnMessage");
 const { returnConfirm } = require("./returnMessage");
+const { returnContact } = require("./returnMessage");
 const { getNextDays } = require("./getNextDays");
 const { deleteSchedule } = require("../database/deleteData");
 const { formatDayHour } = require("./formatDayHour");
@@ -22,6 +23,7 @@ const getReply = async (user, client) => {
   const barbers = await getData("barbeiros");
   let schedule = await getSchedule(user);
   let teste = await hasEvent(user);
+  console.log('AQUIIIIIII >>>>>>>>',teste)
   await isRegistered(user);
 
   console.log("mensagem recebida:", user.keyword);
@@ -31,31 +33,34 @@ const getReply = async (user, client) => {
   // Se já possuir evento agendado nos próximos dias
   if (teste.hasEvent) {
     let event = teste.event;
+    console.log('AQUIIIIII22222>>>>>', event)
     let chatId = teste.chatId;
+    let date = teste.event[0].date;
     switch (user.keyword) {
       case "10":
-        reply = `Ok, a seguir está a data do seu agendamento pendente! Te aguardamos!!!`;
-        return reply;
-      case "20":
         returnCancel(event, chatId, client, user);
-        deleteEvent(event)
-        reply = `Ok, vamos lá!\nPara agendar um atendimento escolha um de nossos barbeiros!\n\n`;
+        deleteEvent(event);
+        reply = `Ok ${user.name}, vamos lá!\nPrimeiro preciso que escolha um de nossos barbeiros!\n\n`;
         for (let i = 0; i < barbers.length; i++) {
           reply += `\n🙎‍♂️ - *[${i + 1}]* ${barbers[i].data.name}`;
         }
         reply += "\n\n*🚫 - [0]* Cancelar agendamento";
         return reply;
-      case "30":
-        reply = `Pode deixar, ta cancelado!.\nMas que pena 😥, assim que puder, entre em contato com a gente para fazer seu agendamento, até abreve! 👋 `;
+      case "20":
         returnCancel(event, chatId, client, user);
-        deleteEvent(event)
+        deleteEvent(event);
+        reply = `Pode deixar, já cancelamos!\nMas que pena 😥, assim que puder, entre em contato com a gente para refazer seu agendamento, até abreve! 👋 `;
         return reply;
       case "00":
-        reply = ``;
+        returnContact(event, chatId, client, user);
+        reply = `Sua solicitação foi encaminhada a um de nossos atendentes, logo retornaremos o contato, até abreve! 👋`;
         return reply;
     }
-    console.log("o QUE VEM NESSE EVENTO?", event);
-    reply = `Olá ${user.name}, vi aqui que você possui um agendamento pendente para os próximos dias 🤔\nMe diga qual opção melhor te atende nesse momento:\n\n🗓️ - *[10]* Quero confirmar a data do meu agendamento!\n🔄️ - *[20]* Preciso agendar outra data!\n🥲 - *[30]* Não poderei comparecer!\n☎️ - *[00]* Preciso falar com um atendente!`;
+    reply = `Olá *${
+      user.name
+    }*, vi aqui que você possui um agendamento para a data *${formatDayHour(
+      date
+    )}* 🤔\nMe diga qual opção melhor te atende nesse momento:\n\n🗓️ - *[10]* Preciso agendar outra data!\n🥲 - *[20]* Não poderei comparecer!\n☎️ - *[00]* Preciso falar com um atendente!`;
     return reply;
   }
 
@@ -68,10 +73,11 @@ const getReply = async (user, client) => {
   // Se ainda não existir um "agendamento", cria-se um e solicita a seleção de um "barbeiro"
   if (schedule === null) {
     createSchedule(user);
+
     reply = `Olá ${user.name}! Tudo certo?\nPara agendar um atendimento escolha um de nossos barbeiros!\n\n`;
     for (let i = 0; i < barbers.length; i++) {
       reply += `\n🙎‍♂️ - *[${i + 1}]* ${barbers[i].data.name}`;
-    }
+  }
     reply += "\n\n*🚫 - [0]* Cancelar agendamento";
     return reply;
   }
@@ -84,7 +90,7 @@ const getReply = async (user, client) => {
     if (schedule.data.barber !== null) {
       reply = `${user.name}, para realizar o agendamento com o barbeiro ${schedule.data.barber.data.name} selecione uma das seguintes opções:\n\n`;
       for (let i = 0; i < services.length; i++) {
-        reply += `\n✂️ - *[${i + 1}]* ${services[i].data.name}`;
+        reply += `\n✂️ - *[${i + 1}]* ${services[i].data.name} *[R$${services[i].data.price}]*`;
       }
       reply += "\n\n*🚫 - [0]* Cancelar agendamento";
       return reply;
@@ -105,7 +111,7 @@ const getReply = async (user, client) => {
     // Se após a atualização de "agendamento" ainda não exista um "serviço" selecionado, solicita a seleção novamente
     if (schedule.data.service !== null) {
       reply = `Selecione o dia de prefrência:\n\n`;
-      nextDays = getNextDays();
+      nextDays =  getNextDays();
       for (let i = 0; i < nextDays.length; i++) {
         reply += `\n🗓️ - *[${i + 1}]* ${nextDays[i].dayOfWeek}, dia ${
           nextDays[i].dayOfMonth
@@ -116,7 +122,7 @@ const getReply = async (user, client) => {
     } else {
       reply = `⚠️ Opção inválida\nEscolha uma opção válida dentre nossos serviços!\n\n`;
       for (let i = 0; i < services.length; i++) {
-        reply += `\n✂️ - *[${i + 1}]* ${services[i].data.name}`;
+        reply += `\n✂️ - *[${i + 1}]* ${services[i].data.name} *[R$${services[i].data.price}]*`;
       }
       reply += "\n\n*🚫 - [0]* Cancelar agendamento";
       return reply;
@@ -134,7 +140,6 @@ const getReply = async (user, client) => {
       let selectedDay = schedule.data.date.dayOfWeek.dayOfMonth.toString();
       reply = `${user.name}, escolha um dos próximos horários disponíves:\n\n`;
       let eventsToday = getEventsToday(eventsArr, selectedDay);
-
       if (eventsToday.length > 0) {
         for (let i = 0; i < eventsToday.length; i++) {
           reply += `\n🕐 - *[${i + 1}]* ${formatHour(eventsToday[i].date)}`;
@@ -143,7 +148,7 @@ const getReply = async (user, client) => {
         return reply;
       } else {
         await updateSchedule(user, "dayReset");
-        reply = `O dia selecionado não possui horários disponíveis, selecione um outro dia de preferência:\n\n`;
+        reply = `⚠️ O dia selecionado não possui horários disponíveis, selecione um outro dia de preferência:\n\n`;
         nextDays = getNextDays();
         for (let i = 0; i < nextDays.length; i++) {
           reply += `\n🗓️ - *[${i + 1}]* ${nextDays[i].dayOfWeek}, dia ${
@@ -172,14 +177,25 @@ const getReply = async (user, client) => {
     eventsArr = await getEvents(schedule);
     await updateSchedule(user, "date", eventsArr);
     schedule = await getSchedule(user);
-    reply = `Para confirmar o agendamento de *${
-      schedule.data.service.data.name
-    }* com o barbeiro *${
-      schedule.data.barber.data.name
-    }* para a data *${formatDayHour(
-      schedule.data.date.data
-    )}* responda com a opção *[1]*!\n\n✅ - *[1]* Confirmar agendamento\n\n🚫 - *[0]* Cancelar agendamento`;
-    return reply;
+    if (schedule.data.date.data !== undefined) {
+      reply = `Para confirmar o agendamento de *${
+        schedule.data.service.data.name
+      }* com o barbeiro *${
+        schedule.data.barber.data.name
+      }*, \npara a data *${formatDayHour(
+        schedule.data.date.data
+      )}*, no valor de *R$ ${schedule.data.service.data.price}.*\nresponda com a opção *[1]*!\n\n✅ - *[1]* Confirmar agendamento\n\n🚫 - *[0]* Cancelar agendamento`;
+      return reply;
+    } else {
+      reply = `⚠️ Opção inválida\nEscolha uma opção válida dentre nossos horários disponíveis!\n\n`;
+      let selectedDay = schedule.data.date.dayOfWeek.dayOfMonth.toString();
+      let eventsToday = getEventsToday(eventsArr, selectedDay);
+      for (let i = 0; i < eventsToday.length; i++) {
+        reply += `\n🕐 - *[${i + 1}]* ${formatHour(eventsToday[i].date)}`;
+      }
+      reply += "\n\n*🚫 - [0]* Cancelar agendamento";
+      return reply;
+    }
   }
 
   //Se todos os campos acima foram preenchidos corretamente, verificar se há confirmação do agendamento e finaliza atendimento

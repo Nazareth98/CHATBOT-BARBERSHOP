@@ -1,24 +1,27 @@
+const axios = require("axios");
 const moment = require("moment");
 const { formatDayOfWeek } = require("./formatDate");
 
 const getNextDays = () => {
   let nextDays = [];
+  let currentDate = new Date();
+
   for (let i = 0; i < 7; i++) {
-    let Day = new Date();
-    let data = moment(Day);
-    let j = i;
-    let formatedDate = data.format("YYYY-MM-DDTHH:mm:ssZ");
+    let nextDay = new Date();
+    nextDay.setDate(currentDate.getDate() + i);
 
-    if (Day.getDay() + i > 6) {
-      j = i - 7;
-    }
+    let dayOfMonth = nextDay.getDate().toLocaleString(undefined, {
+      minimumIntegerDigits: 2,
+    });
+    let dayOfWeek = nextDay.getDay();
 
-    let dayOfMonth = Day.getDate() + i;
-    let dayOfWeek = Day.getDay() + j;
     if (dayOfWeek !== 0) {
+      let formatedDate = nextDay.toISOString();
+      let formattedDayOfWeek = formatDayOfWeek(dayOfWeek.toString());
+
       nextDays.push({
         Date: formatedDate,
-        dayOfWeek: formatDayOfWeek(dayOfWeek.toString()),
+        dayOfWeek: formattedDayOfWeek,
         dayOfMonth: dayOfMonth,
       });
     }
@@ -27,6 +30,11 @@ const getNextDays = () => {
   return nextDays;
 };
 
+
+
+
+
+
 module.exports = {
-  getNextDays,
+  getNextDays
 };

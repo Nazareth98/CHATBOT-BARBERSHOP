@@ -1,4 +1,4 @@
-const { Client, LocalAuth } = require("whatsapp-web.js");
+const { Client, LocalAuth, MessageMedia } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
 const { formatToNumber } = require("./src/scripts/formatObjects");
 const { getReply } = require("./src/scripts/getReply");
@@ -94,6 +94,7 @@ app.get("/events", async (req, res) => {
   }
 });
 
+
 app.get("/confirm", async (req, res) => {
   try {
     const calendar = google.calendar({ version: "v3", auth: oAuth2Client });
@@ -132,7 +133,6 @@ app.get("/confirm", async (req, res) => {
     res.status(500).send("Erro ao atualizar o evento");
   }
 });
-
 
 app.get("/delete", async (req, res) => {
   try {

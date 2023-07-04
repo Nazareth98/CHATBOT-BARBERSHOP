@@ -4,7 +4,7 @@ const { getData } = require("../database/getData");
 const hasEvent = async (user) => {
   const barbers = await getData("barbeiros");
   let hasEvent = false;
-  let event;
+  let event = [];
   let chatId;
   for (let i = 0; i < barbers.length; i++) {
     let eventsArray = [];
@@ -20,20 +20,25 @@ const hasEvent = async (user) => {
             date: data[j].start.dateTime,
             summary: data[j].summary,
             description: data[j].description,
-            calendarId: barbers[i].data.calendarId
+            calendarId: barbers[i].data.calendarId,
           });
         }
       })
       .catch((error) => console.log("Erro ao buscar os eventos:", error));
 
-    for (let k = 0; k < eventsArray.length; k++) {
-      if (eventsArray[k].description.includes(user.phoneNumber)) {
-        hasEvent = true;
-        event = eventsArray[k];
-        chatId = barbers[i].data.chatId;
-        break;
-      }
-    }
+      /*for (let k = 0; k < eventsArray.length; k++) {
+        if (eventsArray[k].description.includes(user.phoneNumber)) {
+          hasEvent = true;
+          event.push(eventsArray[k]); // Adiciona o evento correspondente ao array matchedEvents
+          chatId = barbers[i].data.chatId;
+        }*/
+
+      for (let k = 0; k < eventsArray.length; k++) {
+        if (eventsArray[k].description.includes(user.phoneNumber)) {
+          hasEvent = true;
+          event.push(eventsArray[k])
+          chatId = barbers[i].data.chatId;
+        }}
     if (hasEvent) {
       break;
     }

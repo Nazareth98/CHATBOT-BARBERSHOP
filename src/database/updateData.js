@@ -99,10 +99,21 @@ const updateSchedule = async (user, field, eventsArr) => {
     // Verifique se user.keyword é um valor válido antes de acessar barbers
     if (user.keyword >= 1 && user.keyword <= eventsToday.length) {
       // Atualize o documento com o barbeiro correto
-      const selectedDate = eventsToday[user.keyword - 1];
-      console.log("selected date: ", selectedDate);
+
+      if (user.keyword >= 1 && user.keyword <= eventsToday.length) {
+        let selectedDate= []
+        if (schedule.data.service.data.timeToDo  === '1') {
+          selectedDate = [eventsToday[user.keyword - 1]];
+        } else {
+          selectedDate = [
+            eventsToday[user.keyword - 1],
+            eventsToday[user.keyword]
+          ];
+        }
+      const selectedDateIds = selectedDate.map((data) => data.id); // Extrai apenas os ids das datas selecionadas
+      const selectedDateData = selectedDate[0].date;
       await updateDoc(documentRef, {
-        date: { id: selectedDate.id, data: selectedDate.date },
+        date: { id: selectedDateIds, data: selectedDateData },
       })
         .then(() => {
           console.log("Documento atualizado com sucesso!");
@@ -114,7 +125,7 @@ const updateSchedule = async (user, field, eventsArr) => {
       console.error("O horário selecionado é inválido!");
     }
   }
-};
+}};
 
 module.exports = {
   updateClient,
