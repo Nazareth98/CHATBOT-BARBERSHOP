@@ -1,6 +1,23 @@
-const axios = require("axios");
-const moment = require("moment");
-const { formatDayOfWeek } = require("./formatDate");
+const { formatDayOfWeek } = require("../formatters");
+
+const getEventsToday = (eventsArr, selectedDay) => {
+  let eventsToday = [];
+  for (let i = 0; i < eventsArr.length; i++) {
+    if (
+      eventsArr[i].summary === "Livre" &&
+      eventsArr[i].date.slice(8, 10) === selectedDay
+    ) {
+      eventsToday.push(eventsArr[i]);
+    }
+  }
+  eventsToday.sort((a, b) => {
+    const dateA = new Date(a.date);
+    const dateB = new Date(b.date);
+    return dateA - dateB;
+  });
+
+  return eventsToday;
+};
 
 const getNextDays = () => {
   let nextDays = [];
@@ -30,11 +47,7 @@ const getNextDays = () => {
   return nextDays;
 };
 
-
-
-
-
-
 module.exports = {
-  getNextDays
+  getEventsToday,
+  getNextDays,
 };

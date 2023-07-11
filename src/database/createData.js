@@ -1,43 +1,41 @@
 const { v4: uuidv4 } = require("uuid");
-const { db, doc, setDoc } = require("../firebase/index");
-const { getClient, getService } = require("./getData");
+const { db, doc, setDoc } = require("../config/firebase/index");
+const { getClient } = require("./getData");
 
-const createClient = async ({ name, phoneNumber, chatId }) => {
-  if (phoneNumber.includes("status")) {
-    return null;
-  } else {
-    if (chatId.includes("g.us")) {
-      return null;
-    } else {
-      await setDoc(doc(db, "clientes", uuidv4()), {
-        name: name,
-        phoneNumber: phoneNumber,
-        totalServices: 0,
-        lastService: null,
+const addClient = async ({ name, phoneNumber }) => {
+  try {
+    await setDoc(doc(db, "clientes", uuidv4()), {
+      name: name,
+      phoneNumber: phoneNumber,
+      totalServices: 0,
+      lastService: null,
+    });
+    console.log("Cliente criado com sucesso");
+  } catch (error) {
+    console.log("Erro ao criar Cliente: " + error);
+  }
+};
+
+const addSchedule = async (user) => {
+  const client = await getClient(user);
+  if (client !== null) {
+    try {
+      await setDoc(doc(db, "agendamentos", uuidv4()), {
+        client: client,
+        service: null,
+        barber: null,
+        date: null,
       });
+      console.log("Agendamento criado com sucesso");
+    } catch (error) {
+      console.log("Erro ao criar agendamento: " + error);
     }
   }
 };
 
-const createSchedule = async (user) => {
-  if (user.phoneNumber.includes("status")) {
-    return null;
-  } else {
-    const client = await getClient(user);
-    await setDoc(doc(db, "agendamentos", uuidv4()), {
-      client: client,
-      service: null,
-      barber: null,
-      date: null,
-    });
-  }
-};
-
-const createGoogleSchedule = (user) => {};
-
 module.exports = {
-  createClient,
-  createSchedule,
+  addClient,
+  addSchedule,
 };
 
 // FINALIZAR FUNÇÃO createSchedule(USER, KEYWORD)

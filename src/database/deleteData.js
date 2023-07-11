@@ -1,4 +1,4 @@
-const { db, doc, setDoc, deleteDoc } = require("../firebase/index");
+const { db, doc, setDoc, deleteDoc } = require("../config/firebase/index");
 const { getSchedule } = require("./getData");
 
 const deleteSchedule = async (user) => {

@@ -1,4 +1,4 @@
-const { db } = require("../firebase/index");
+const { db } = require("../config/firebase/index");
 const { getDocs, collection } = require("firebase/firestore/lite");
 
 const getData = async (folder) => {
@@ -22,6 +22,7 @@ const getSchedule = async (user) => {
         schedules[i].data.client.data.phoneNumber === user.phoneNumber
       ) {
         clientSchedule = schedules[i];
+        console.log("schedule em getSchedule: ", clientSchedule);
         break;
       }
     }
@@ -32,8 +33,9 @@ const getSchedule = async (user) => {
 const getClient = async (user) => {
   const clients = await getData("clientes");
   let client = null;
-
+  console.log("clientes", clients);
   for (item of clients) {
+    console.log("item", item);
     if (item.data.phoneNumber === user.phoneNumber) {
       client = item;
     }
