@@ -94,7 +94,7 @@ const updateSchedule = async (user, field, eventsArr) => {
         const prop = "date";
         const value = null;
         await updateScheduleProp(documentRef, prop, value);
-        console.log("Documento atualizado com sucesso!");
+        console.log("Documento atualizado com sucesso!.");
       } catch (error) {
         console.error("Erro ao atualizar o documento:", error);
       }
