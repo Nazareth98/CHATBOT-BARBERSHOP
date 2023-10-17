@@ -63,5 +63,7 @@ Dentro do arquivo 'data\tiposGrupos.js', existem duas possíveis alterações a 
 #### 6. SOLUCAÇÃO DE PROBLEMAS
 
 Quando ocorrer erros e problemas que necessitem de suporte técnico, entre em contato através dos seguintes emails: 
+
 patrickn.contact@gmail.com
+
 contatoandresavio@gmail.com
